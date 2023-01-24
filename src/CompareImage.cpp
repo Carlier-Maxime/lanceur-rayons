@@ -39,9 +39,12 @@ bool CompareImage::compare(const std::string& imgPath1, const std::string& imgPa
             FreeImage_GetPixelColor(img2,x,y,&clr2);
             if (clr1.rgbRed != clr2.rgbRed || clr1.rgbGreen != clr2.rgbGreen || clr1.rgbBlue != clr2.rgbBlue) {
                 error++;
-                clrD.rgbRed = (clr1.rgbRed+clr2.rgbRed)/2;
-                clrD.rgbGreen = (clr1.rgbGreen+clr2.rgbGreen)/2;
-                clrD.rgbBlue = (clr1.rgbBlue+clr2.rgbBlue)/2;
+                clrD.rgbRed = clr1.rgbRed-clr2.rgbRed;
+                if (clrD.rgbRed<0) clrD.rgbRed*=-1;
+                clrD.rgbGreen = clr1.rgbGreen-clr2.rgbGreen;
+                if (clrD.rgbGreen<0) clrD.rgbGreen*=-1;
+                clrD.rgbBlue = clr1.rgbBlue-clr2.rgbBlue;
+                if (clrD.rgbBlue<0) clrD.rgbBlue*=-1;
             } else clrD={0,0,0};
             FreeImage_SetPixelColor(diff,x,y,&clrD);
         }
