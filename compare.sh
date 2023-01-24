@@ -1,2 +1,5 @@
 #!/bin/bash
-bin/compareImage "$1" "$2"
+
+MY_PATH=$(dirname "$0")
+
+"$MY_PATH"/bin/compareImage "$MY_PATH"/"$1" "$MY_PATH"/"$2"
