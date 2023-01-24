@@ -4,5 +4,5 @@
 
 class CompareImage {
 public:
-    static bool compare(std::string imgPath1, std::string imgPath2);
+    static bool compare(const std::string& imgPath1, const std::string& imgPath2);
 };
