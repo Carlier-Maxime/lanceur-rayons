@@ -1,2 +1,3 @@
 .gitlab-ci.yml merge=union
 tests.sh merge=union
+*.sh eol=lf
