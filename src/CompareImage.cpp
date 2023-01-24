@@ -55,6 +55,7 @@ bool CompareImage::compare(const std::string& imgPath1, const std::string& imgPa
 quit:
     FreeImage_Unload(img1);
     FreeImage_Unload(img2);
+    FreeImage_Unload(diff);
     return status;
 }
 
