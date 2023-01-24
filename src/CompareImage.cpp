@@ -32,6 +32,7 @@ bool CompareImage::compare(const std::string& imgPath1, const std::string& imgPa
     diff = FreeImage_Allocate((int) FreeImage_GetWidth(img1), (int) FreeImage_GetHeight(img1), 24);
     if (!diff) {
         std::cerr << "failed allocate for diff.png !" << std::endl;
+        goto quit;
     }
     for (unsigned x=0; x<FreeImage_GetWidth(img1); x++) {
         for (unsigned y=0; y<FreeImage_GetHeight(img1); y++) {
@@ -39,12 +40,9 @@ bool CompareImage::compare(const std::string& imgPath1, const std::string& imgPa
             FreeImage_GetPixelColor(img2,x,y,&clr2);
             if (clr1.rgbRed != clr2.rgbRed || clr1.rgbGreen != clr2.rgbGreen || clr1.rgbBlue != clr2.rgbBlue) {
                 error++;
-                clrD.rgbRed = clr1.rgbRed-clr2.rgbRed;
-                if (clrD.rgbRed<0) clrD.rgbRed*=-1;
-                clrD.rgbGreen = clr1.rgbGreen-clr2.rgbGreen;
-                if (clrD.rgbGreen<0) clrD.rgbGreen*=-1;
-                clrD.rgbBlue = clr1.rgbBlue-clr2.rgbBlue;
-                if (clrD.rgbBlue<0) clrD.rgbBlue*=-1;
+                clrD.rgbRed = (clr1.rgbRed>clr2.rgbRed) ? clr1.rgbRed-clr2.rgbRed : clr2.rgbRed-clr1.rgbRed;
+                clrD.rgbGreen = (clr1.rgbGreen>clr2.rgbGreen) ? clr1.rgbGreen-clr2.rgbGreen : clr2.rgbGreen-clr1.rgbGreen;
+                clrD.rgbBlue = (clr1.rgbBlue>clr2.rgbBlue) ? clr1.rgbBlue-clr2.rgbBlue : clr2.rgbBlue-clr1.rgbBlue;
             } else clrD={0,0,0};
             FreeImage_SetPixelColor(diff,x,y,&clrD);
         }
