@@ -7,13 +7,28 @@ bool CompareImage::compare(const std::string& imgPath1, const std::string& imgPa
     FIBITMAP *img1=nullptr, *img2=nullptr;
     unsigned long long error=0;
     bool status=false;
-    if (FreeImage_GetFIFCount()<=0) goto quit;
+    if (FreeImage_GetFIFCount()<=0) {
+        std::cerr << "FreeImage not initialized !" << std::endl;
+        goto quit;
+    }
     img1 = FreeImage_Load(FIF_PNG, imgPath1.c_str(),0);
-    if (!img1) goto quit;
+    if (!img1) {
+        std::cerr << "failed load image 1 ! (" << imgPath1 << ")" << std::endl;
+        goto quit;
+    }
     img2 = FreeImage_Load(FIF_PNG, imgPath2.c_str(),0);
-    if (!img2) goto quit;
-    if (FreeImage_GetWidth(img1) != FreeImage_GetWidth(img2)) goto quit;
-    if (FreeImage_GetHeight(img1) != FreeImage_GetHeight(img2)) goto quit;
+    if (!img2) {
+        std::cerr << "failed load image 2 ! (" << imgPath2 << ")" << std::endl;
+        goto quit;
+    }
+    if (FreeImage_GetWidth(img1) != FreeImage_GetWidth(img2)) {
+        std::cerr << "Width image is different !" << std::endl;
+        goto quit;
+    }
+    if (FreeImage_GetHeight(img1) != FreeImage_GetHeight(img2)) {
+        std::cerr << "Height image is different !" << std::endl;
+        goto quit;
+    }
     for (unsigned x=0; x<FreeImage_GetWidth(img1); x++) {
         for (unsigned y=0; y<FreeImage_GetHeight(img1); y++) {
             FreeImage_GetPixelColor(img1,x,y,&clr1);
