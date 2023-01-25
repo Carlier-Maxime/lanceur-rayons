@@ -36,7 +36,7 @@ Color* Image::getColorPixel(uint x, uint y) {
 }
 
 void Image::setColorPixel(uint x, uint y, Color *clr) {
-    RGBQUAD c = {clr->getR(),clr->getG(),clr->getB()};
+    RGBQUAD c = {clr->getB(),clr->getG(),clr->getR()};
     FreeImage_SetPixelColor(img,x,y,&c);
 }
 
