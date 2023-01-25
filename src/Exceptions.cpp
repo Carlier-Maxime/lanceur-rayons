@@ -1,7 +1,3 @@
-//
-// Created by Reynald on 25/01/2023.
-//
-
 #include "Exceptions.h"
 
 #include <utility>

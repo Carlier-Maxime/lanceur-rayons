@@ -1,25 +1,29 @@
 #ifndef LANCEUR_RAYONS_COLOR_H
 #define LANCEUR_RAYONS_COLOR_H
 
-class Color {
-private:
-    unsigned char r,g,b;
+#include "Triplet.h"
+
+class Color : public Triplet {
 public:
-    Color(unsigned char r,unsigned char g, unsigned char b);
+    Color(double red, double green, double blue);
+    Color(unsigned char red,unsigned char green, unsigned char blue);
 
-    unsigned char getR() const;
+    unsigned char getR255() const;
+    unsigned char getG255() const;
+    unsigned char getB255() const;
+    double getR() const;
+    double getG() const;
+    double getB() const;
 
-    unsigned char getG() const;
-
-    unsigned char getB() const;
-
-    void setR(unsigned char r);
-
-    void setG(unsigned char g);
-
-    void setB(unsigned char b);
+    void setR(unsigned char red);
+    void setR(double red);
+    void setG(unsigned char green);
+    void setG(double green);
+    void setB(unsigned char blue);
+    void setB(double blue);
 
     void setRGB(unsigned char red, unsigned char green, unsigned char blue);
+    void setRGB(double red, double green, double blue);
 };
 
 #endif //LANCEUR_RAYONS_COLOR_H
