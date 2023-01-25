@@ -41,7 +41,7 @@ void Image::setColorPixel(uint x, uint y, Color *clr) {
 }
 
 unsigned long long Image::compare(Image *image) {
-    Color *clr1, *clr2, *clrD = new Color(0.,0.,0.);
+    Color *clr1, *clr2, *clrD;
     unsigned long long error=0;
     if (getWidth() != image->getWidth() || getHeight() != image->getHeight())
         return ((getWidth()>image->getWidth()) ? getWidth()-image->getWidth() : image->getWidth()-getWidth())*((getHeight()>image->getHeight()) ? getHeight()-image->getHeight() : image->getHeight()-getHeight());
@@ -50,12 +50,8 @@ unsigned long long Image::compare(Image *image) {
         for (unsigned y=0; y<getHeight(); y++) {
             clr1 = getColorPixel(x,y);
             clr2 = image->getColorPixel(x,y);
-            if (clr1->getR() != clr2->getR() || clr1->getG() != clr2->getG() || clr1->getB() != clr2->getB()) {
-                error++;
-                clrD->setR((clr1->getR()>clr2->getR()) ? clr1->getR()-clr2->getR() : clr2->getR()-clr1->getR());
-                clrD->setG((clr1->getG()>clr2->getG()) ? clr1->getG()-clr2->getG() : clr2->getG()-clr1->getG());
-                clrD->setB((clr1->getB()>clr2->getB()) ? clr1->getB()-clr2->getB() : clr2->getB()-clr1->getB());
-            } else clrD->setRGB(0.,0.,0.);
+            clrD = clr1->difference(clr2);
+            if (*clrD != Color(0.,0.,0.)) error++;
             diff->setColorPixel(x,y,clrD);
         }
     }

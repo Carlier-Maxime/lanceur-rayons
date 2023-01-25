@@ -24,6 +24,8 @@ public:
 
     void setRGB(unsigned char red, unsigned char green, unsigned char blue);
     void setRGB(double red, double green, double blue);
+
+    Color* difference(Color *clr2) const;
 };
 
 #endif //LANCEUR_RAYONS_COLOR_H

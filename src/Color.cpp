@@ -60,3 +60,13 @@ void Color::setRGB(double red, double green, double blue) {
     y=green;
     z=blue;
 }
+
+Color *Color::difference(Color *clr2) const {
+    auto *clrD = new Color(0.,0.,0.);
+    if (getR() != clr2->getR() || getG() != clr2->getG() || getB() != clr2->getB()) {
+        clrD->setR((getR()>clr2->getR()) ? getR()-clr2->getR() : clr2->getR()-getR());
+        clrD->setG((getG()>clr2->getG()) ? getG()-clr2->getG() : clr2->getG()-getG());
+        clrD->setB((getB()>clr2->getB()) ? getB()-clr2->getB() : clr2->getB()-getB());
+    }
+    return clrD;
+}
