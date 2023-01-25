@@ -1,7 +1,7 @@
 #include "Image.h"
 #include <FreeImage.h>
-
 #include <utility>
+#include "Exceptions.h"
 
 bool Image::isInit = false;
 
@@ -16,34 +16,35 @@ void Image::free() {
 }
 
 Image::Image(uint width, uint height) {
-    if (!isInit) throw std::exception();
+    if (!isInit) throw ImageException("Not initialized !");
     this->path = "";
     img = FreeImage_Allocate((int) width,(int) height,24);
-    if (!img) throw std::exception();
+    if (!img) throw ImageException("Allocate failed !");
 }
 
 Image::Image(const std::string& path) {
-    if (!isInit || path.empty()) throw std::exception();
+    if (!isInit || path.empty()) throw ImageException("Not initialized !");
     this->path = path;
     img = FreeImage_Load(FIF_PNG,path.c_str());
-    if (!img) throw std::exception();
+    if (!img) throw ImageException("Load image failed !");
 }
 
 Color* Image::getColorPixel(uint x, uint y) {
     RGBQUAD c;
-    FreeImage_GetPixelColor(img,x,y,&c);
+    if (!FreeImage_GetPixelColor(img,x,y,&c)) throw ImageException("Get pixel color failed !");
     return new Color(c.rgbRed,c.rgbGreen,c.rgbBlue);
 }
 
 void Image::setColorPixel(uint x, uint y, Color *clr) {
     RGBQUAD c = {clr->getB(),clr->getG(),clr->getR()};
-    FreeImage_SetPixelColor(img,x,y,&c);
+    if (!FreeImage_SetPixelColor(img,x,y,&c)) throw ImageException("Set Pixel Color failed !");
 }
 
 unsigned long long Image::compare(Image *image) {
     Color *clr1, *clr2, *clrD = new Color(0,0,0);
     unsigned long long error=0;
-    if (getWidth() != image->getWidth() || getHeight() != image->getHeight()) return -1;
+    if (getWidth() != image->getWidth() || getHeight() != image->getHeight())
+        return ((getWidth()>image->getWidth()) ? getWidth()-image->getWidth() : image->getWidth()-getWidth())*((getHeight()>image->getHeight()) ? getHeight()-image->getHeight() : image->getHeight()-getHeight());
     auto *diff = new Image(getWidth(),getHeight());
     for (unsigned x=0; x<getWidth(); x++) {
         for (unsigned y=0; y<getHeight(); y++) {
@@ -73,7 +74,7 @@ void Image::setPath(std::string newPath) {
 
 void Image::save() {
     if (path.empty()) return;
-    FreeImage_Save(FIF_PNG,img,path.c_str());
+    if (!FreeImage_Save(FIF_PNG,img,path.c_str())) throw ImageException("Save failed !");
 }
 
 unsigned Image::getWidth() {
