@@ -2,7 +2,8 @@
 #define LANCEUR_RAYONS_IMAGE_H
 
 #include <string>
-#include <FreeImage.h>
+#include "Color.h"
+typedef struct FIBITMAP FIBITMAP;
 
 class Image {
 private:
@@ -12,10 +13,10 @@ private:
 public:
     ~Image();
     Image(unsigned width, unsigned height);
-    explicit Image(std::string path);
+    explicit Image(const std::string& path);
     unsigned long long compare(Image *image);
-    RGBQUAD getColorPixel(int x, int y);
-    void setColorPixel(int x, int y, RGBQUAD clr);
+    Color* getColorPixel(uint x, uint y);
+    void setColorPixel(uint x, uint y, Color* clr);
     void setPath(std::string newPath);
     void save();
     unsigned getWidth();

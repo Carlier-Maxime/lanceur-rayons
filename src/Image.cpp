@@ -1,4 +1,7 @@
 #include "Image.h"
+#include <FreeImage.h>
+
+#include <utility>
 
 bool Image::isInit = false;
 
@@ -15,42 +18,43 @@ void Image::free() {
 Image::Image(uint width, uint height) {
     if (!isInit) throw std::exception();
     this->path = "";
-    img = FreeImage_Allocate(width,height,24);
+    img = FreeImage_Allocate((int) width,(int) height,24);
     if (!img) throw std::exception();
 }
 
-Image::Image(std::string path) {
+Image::Image(const std::string& path) {
     if (!isInit || path.empty()) throw std::exception();
     this->path = path;
     img = FreeImage_Load(FIF_PNG,path.c_str());
     if (!img) throw std::exception();
 }
 
-RGBQUAD Image::getColorPixel(int x, int y) {
+Color* Image::getColorPixel(uint x, uint y) {
     RGBQUAD c;
     FreeImage_GetPixelColor(img,x,y,&c);
-    return c;
+    return new Color(c.rgbRed,c.rgbGreen,c.rgbBlue);
 }
 
-void Image::setColorPixel(int x, int y, RGBQUAD clr) {
-    FreeImage_SetPixelColor(img,x,y,&clr);
+void Image::setColorPixel(uint x, uint y, Color *clr) {
+    RGBQUAD c = {clr->getR(),clr->getG(),clr->getB()};
+    FreeImage_SetPixelColor(img,x,y,&c);
 }
 
 unsigned long long Image::compare(Image *image) {
-    RGBQUAD clr1, clr2, clrD;
+    Color *clr1, *clr2, *clrD = new Color(0,0,0);
     unsigned long long error=0;
     if (getWidth() != image->getWidth() || getHeight() != image->getHeight()) return -1;
-    Image *diff = new Image(getWidth(),getHeight());
+    auto *diff = new Image(getWidth(),getHeight());
     for (unsigned x=0; x<getWidth(); x++) {
         for (unsigned y=0; y<getHeight(); y++) {
             clr1 = getColorPixel(x,y);
             clr2 = image->getColorPixel(x,y);
-            if (clr1.rgbRed != clr2.rgbRed || clr1.rgbGreen != clr2.rgbGreen || clr1.rgbBlue != clr2.rgbBlue) {
+            if (clr1->getR() != clr2->getR() || clr1->getG() != clr2->getG() || clr1->getB() != clr2->getB()) {
                 error++;
-                clrD.rgbRed = (clr1.rgbRed>clr2.rgbRed) ? clr1.rgbRed-clr2.rgbRed : clr2.rgbRed-clr1.rgbRed;
-                clrD.rgbGreen = (clr1.rgbGreen>clr2.rgbGreen) ? clr1.rgbGreen-clr2.rgbGreen : clr2.rgbGreen-clr1.rgbGreen;
-                clrD.rgbBlue = (clr1.rgbBlue>clr2.rgbBlue) ? clr1.rgbBlue-clr2.rgbBlue : clr2.rgbBlue-clr1.rgbBlue;
-            } else clrD={0,0,0};
+                clrD->setR((clr1->getR()>clr2->getR()) ? clr1->getR()-clr2->getR() : clr2->getR()-clr1->getR());
+                clrD->setG((clr1->getG()>clr2->getG()) ? clr1->getG()-clr2->getG() : clr2->getG()-clr1->getG());
+                clrD->setB((clr1->getB()>clr2->getB()) ? clr1->getB()-clr2->getB() : clr2->getB()-clr1->getB());
+            } else clrD->setRGB(0,0,0);
             diff->setColorPixel(x,y,clrD);
         }
     }
@@ -64,7 +68,7 @@ Image::~Image() {
 }
 
 void Image::setPath(std::string newPath) {
-    this->path = newPath;
+    this->path = std::move(newPath);
 }
 
 void Image::save() {
