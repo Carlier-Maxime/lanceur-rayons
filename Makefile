@@ -1,21 +1,21 @@
 CC := g++
-DEBUG ?= 0
+DEBUG ?= 1
 ifeq '$(DEBUG)' '1'
 	CFLAGS ?= -Wall -MMD -g
 else
 	CFLAGS ?= -Wall -MMD
 endif
 od = bin/obj
-OBJS_CMP_IMG = $(od)/CompareImage.o
+OBJECTS = $(od)/Image.o
 lib = -lfreeimage
 include_dir = -I3rdparty/include
 lib_dir = -L3rdparty/lib
 
-.PHONY: compareImage
+.PHONY: all compareImage clean mrProper
 
 all : compareImage
 
-compareImage : $(OBJS_CMP_IMG)
+compareImage : $(od)/CompareImage.o $(OBJECTS)
 	$(CC) $^ -o bin/compareImage $(lib) $(include_dir) $(lib_dir)
 
 $(od)/%.o : src/%.cpp
