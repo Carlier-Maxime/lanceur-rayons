@@ -14,8 +14,9 @@ SceneBuilder::SceneBuilder(const std::string& filepath) {
         idLine++;
         std::stringstream ss(line);
         getline(ss,word,' ');
+        if (line.empty()) continue;
         try {
-            if (word[0]=='#') continue;
+            if (word[0]=='#' || word.empty()) continue;
             else if (word=="size") size(ss);
             else if (word=="output") output(ss);
             else if (word=="camera") camera(ss);
@@ -30,6 +31,7 @@ SceneBuilder::SceneBuilder(const std::string& filepath) {
             else if (word=="tri") tri(ss);
             else if (word=="sphere") sphere(ss);
             else if (word=="plane") plane(ss);
+            else throw SyntaxException("Unknown argument !");
         } catch (SyntaxException& e){e.setLine(idLine); throw;}
     }
     file.close();
