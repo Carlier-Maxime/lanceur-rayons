@@ -29,34 +29,34 @@ Image::Image(const std::string& path) {
     if (!img) throw ImageException("Load image failed !");
 }
 
-Color* Image::getColorPixel(uint x, uint y) {
+Color Image::getColorPixel(uint x, uint y) {
     RGBQUAD c;
     if (!FreeImage_GetPixelColor(img,x,y,&c)) throw ImageException("Get pixel color failed !");
-    return new Color(c.rgbRed,c.rgbGreen,c.rgbBlue);
+    return {c.rgbRed,c.rgbGreen,c.rgbBlue};
 }
 
-void Image::setColorPixel(uint x, uint y, Color *clr) {
-    RGBQUAD c = {clr->getB255(),clr->getG255(),clr->getR255()};
+void Image::setColorPixel(uint x, uint y, Color clr) {
+    RGBQUAD c = {clr.getB255(),clr.getG255(),clr.getR255()};
     if (!FreeImage_SetPixelColor(img,x,y,&c)) throw ImageException("Set Pixel Color failed !");
 }
 
 unsigned long long Image::compare(Image *image) {
-    Color *clr1, *clr2, *clrD;
     unsigned long long error=0;
     if (getWidth() != image->getWidth() || getHeight() != image->getHeight())
         return ((getWidth()>image->getWidth()) ? getWidth()-image->getWidth() : image->getWidth()-getWidth())*((getHeight()>image->getHeight()) ? getHeight()-image->getHeight() : image->getHeight()-getHeight());
     auto *diff = new Image(getWidth(),getHeight());
     for (unsigned x=0; x<getWidth(); x++) {
         for (unsigned y=0; y<getHeight(); y++) {
-            clr1 = getColorPixel(x,y);
-            clr2 = image->getColorPixel(x,y);
-            clrD = clr1->difference(clr2);
-            if (*clrD != Color(0.,0.,0.)) error++;
+            Color clr1 = getColorPixel(x,y);
+            Color clr2 = image->getColorPixel(x,y);
+            Color clrD = clr1.difference(clr2);
+            if (clrD != Color(0.,0.,0.)) error++;
             diff->setColorPixel(x,y,clrD);
         }
     }
     diff->setPath("diff.png");
     diff->save();
+    delete diff;
     return error;
 }
 
