@@ -41,71 +41,95 @@ Scene *SceneBuilder::build() {
     return scene;
 }
 
-SceneBuilder SceneBuilder::size(unsigned int width, unsigned int height) {
-    return *this;
+std::string SceneBuilder::getWord(std::istream& is) {
+    std::string word;
+    getline(is,word,' ');
+    return word;
+}
+
+unsigned int SceneBuilder::getUint(std::istream& is) {
+    return std::stoul(getWord(is));
+}
+
+double SceneBuilder::getDouble(std::istream& is) {
+    return std::stod(getWord(is));
 }
 
 void SceneBuilder::size(std::istream& is) {
-    try {
-        std::string word;
-        getline(is,word,' ');
-        unsigned int width = std::stoul(word);
-        getline(is,word,' ');
-        unsigned int height = std::stoul(word);
-        size(width,height);
-    } catch (std::exception& e) {throw SyntaxException("in size");}
+    try {size(getUint(is), getUint(is));}
+    catch (std::exception& e) {throw SyntaxException("in size");}
 }
 
 void SceneBuilder::output(std::istream &is) {
-
+    try {
+        std::string word = getWord(is);
+        if (word.empty()) output("output.png");
+        else output(word);
+    } catch (std::exception& e) {throw SyntaxException("in output");}
 }
 
 void SceneBuilder::camera(std::istream &is) {
-
+    try {camera(getDouble(is),getDouble(is),getDouble(is),getDouble(is),getDouble(is),getDouble(is),getDouble(is),getDouble(is),getDouble(is),getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in camera");}
 }
 
 void SceneBuilder::ambient(std::istream &is) {
-
+    try {ambient(getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in ambient");}
 }
 
 void SceneBuilder::diffuse(std::istream &is) {
-
+    try {diffuse(getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in diffuse");}
 }
 
 void SceneBuilder::specular(std::istream &is) {
-
+    try {specular(getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in specular");}
 }
 
 void SceneBuilder::shininess(std::istream &is) {
-
+    try {shininess(getUint(is));}
+    catch (std::exception& e) {throw SyntaxException("in shininess");}
 }
 
 void SceneBuilder::directional(std::istream &is) {
-
+    try {directional(getDouble(is), getDouble(is), getDouble(is), getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in directional");}
 }
 
 void SceneBuilder::point(std::istream &is) {
-
+    try {point(getDouble(is), getDouble(is), getDouble(is), getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in point");}
 }
 
 void SceneBuilder::maxverts(std::istream &is) {
-
+    try { maxverts(getUint(is));}
+    catch (std::exception& e) {throw SyntaxException("in maxverts");}
 }
 
 void SceneBuilder::vertex(std::istream &is) {
-
+    try {vertex(getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in vertex");}
 }
 
 void SceneBuilder::tri(std::istream &is) {
-
+    try {tri(getUint(is), getUint(is), getUint(is));}
+    catch (std::exception& e) {throw SyntaxException("in tri");}
 }
 
 void SceneBuilder::sphere(std::istream &is) {
-
+    try {sphere(getDouble(is), getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in sphere");}
 }
 
 void SceneBuilder::plane(std::istream &is) {
+    try {plane(getDouble(is), getDouble(is), getDouble(is), getDouble(is), getDouble(is), getDouble(is));}
+    catch (std::exception& e) {throw SyntaxException("in plane");}
+}
 
+SceneBuilder SceneBuilder::size(unsigned int width, unsigned int height) {
+    return *this;
 }
 
 SceneBuilder SceneBuilder::output(const std::string& outputPath) {
@@ -113,7 +137,7 @@ SceneBuilder SceneBuilder::output(const std::string& outputPath) {
 }
 
 SceneBuilder
-SceneBuilder::camera(double x, double y, double z, double u, double v, double w, double n, double o, double f) {
+SceneBuilder::camera(double x, double y, double z, double u, double v, double w, double m, double n, double o, double f) {
     return *this;
 }
 

@@ -21,11 +21,14 @@ private:
     void tri(std::istream& is);
     void sphere(std::istream& is);
     void plane(std::istream& is);
+    static std::string getWord(std::istream& is);
+    static unsigned int getUint(std::istream& is);
+    static double getDouble(std::istream& is);
 public:
     explicit SceneBuilder(const std::string& filepath);
     SceneBuilder size(unsigned int width, unsigned int height);
     SceneBuilder output(const std::string& outputPath);
-    SceneBuilder camera(double x, double y, double z, double u, double v, double w, double n, double o, double f);
+    SceneBuilder camera(double x, double y, double z, double u, double v, double w, double m, double n, double o, double f);
     SceneBuilder ambient(double r, double g, double b);
     SceneBuilder diffuse(double r, double g, double b);
     SceneBuilder specular(double r, double g, double b);
