@@ -12,6 +12,7 @@ include_dir = -I3rdparty/include
 lib_dir = -L3rdparty/lib
 
 .PHONY: all clean mrProper
+.PRECIOUS: $(od)/%.o
 
 all : bin/compareImage bin/main
 
