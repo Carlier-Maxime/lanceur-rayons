@@ -11,12 +11,12 @@ lib = -lfreeimage
 include_dir = -I3rdparty/include
 lib_dir = -L3rdparty/lib
 
-.PHONY: all compareImage clean mrProper
+.PHONY: all clean mrProper
 
-all : compareImage
+all : bin/compareImage
 
-compareImage : $(od)/CompareImage.o $(OBJECTS)
-	$(CC) $^ -o bin/compareImage $(lib) $(include_dir) $(lib_dir)
+bin/% : $(od)/%.o $(OBJECTS)
+	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)
 
 $(od)/%.o : src/%.cpp
 	@mkdir -p $(od)
