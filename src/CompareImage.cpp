@@ -1,4 +1,3 @@
-#include "CompareImage.h"
 #include <iostream>
 #include "Image.h"
 
