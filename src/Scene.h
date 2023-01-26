@@ -1,0 +1,8 @@
+#ifndef LANCEUR_RAYONS_SCENE_H
+#define LANCEUR_RAYONS_SCENE_H
+
+class Scene {
+
+};
+
+#endif //LANCEUR_RAYONS_SCENE_H

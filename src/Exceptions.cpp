@@ -9,3 +9,5 @@ const char *ExceptionWithMsg::what() const noexcept {
 ExceptionWithMsg::ExceptionWithMsg(std::string msg) : msg(std::move(msg)) {}
 
 ImageException::ImageException(const std::string &msg) : ExceptionWithMsg(msg) {}
+
+FileException::FileException(const std::string &msg) : ExceptionWithMsg(msg) {}

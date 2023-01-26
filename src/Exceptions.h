@@ -19,4 +19,9 @@ public:
     explicit ImageException(const std::string &msg);
 };
 
+class FileException : public ExceptionWithMsg {
+public:
+    explicit FileException(const std::string &msg);
+};
+
 #endif //LANCEUR_RAYONS_EXCEPTIONS_H

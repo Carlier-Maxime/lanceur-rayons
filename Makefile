@@ -6,14 +6,14 @@ else
 	CFLAGS ?= -Wall -MMD
 endif
 od = bin/obj
-OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Image.o
+OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Image.o $(od)/Scene.o $(od)/SceneBuilder.o
 lib = -lfreeimage
 include_dir = -I3rdparty/include
 lib_dir = -L3rdparty/lib
 
 .PHONY: all clean mrProper
 
-all : bin/compareImage
+all : bin/compareImage bin/main
 
 bin/% : $(od)/%.o $(OBJECTS)
 	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)
