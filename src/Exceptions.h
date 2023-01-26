@@ -10,7 +10,8 @@ public:
 
 private:
     const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
-private :
+
+protected:
     std::string msg;
 };
 
@@ -22,6 +23,16 @@ public:
 class FileException : public ExceptionWithMsg {
 public:
     explicit FileException(const std::string &msg);
+};
+
+class SyntaxException : public ExceptionWithMsg {
+private:
+    unsigned long long line=-1;
+    std::string result;
+    const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
+public:
+    explicit SyntaxException(const std::string &msg);
+    void setLine(unsigned long long int newLine);
 };
 
 #endif //LANCEUR_RAYONS_EXCEPTIONS_H

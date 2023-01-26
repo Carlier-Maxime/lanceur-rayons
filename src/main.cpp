@@ -6,6 +6,6 @@ int main (int argc, char* argv[]) {
         std::cerr << "Argument missing !" << std::endl;
         return EXIT_FAILURE;
     }
-    Scene* scene = SceneBuilder(argv[1]).build();
+    SceneBuilder(argv[1]).build();
     return EXIT_SUCCESS;
 }
