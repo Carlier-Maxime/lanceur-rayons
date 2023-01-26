@@ -35,4 +35,9 @@ public:
     void setLine(unsigned long long int newLine);
 };
 
+class BuilderException : ExceptionWithMsg {
+public:
+    explicit BuilderException(const std::string &msg);
+};
+
 #endif //LANCEUR_RAYONS_EXCEPTIONS_H

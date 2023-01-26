@@ -25,3 +25,5 @@ void SyntaxException::setLine(unsigned long long int newLine) {
 const char *SyntaxException::what() const noexcept {
     return result.c_str();
 }
+
+BuilderException::BuilderException(const std::string &msg) : ExceptionWithMsg(msg) {}

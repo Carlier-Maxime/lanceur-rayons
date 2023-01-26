@@ -129,6 +129,8 @@ void SceneBuilder::plane(std::istream &is) {
 }
 
 SceneBuilder SceneBuilder::size(unsigned int width, unsigned int height) {
+    if (scene != nullptr) throw BuilderException("size is already defined !");
+    scene = new Scene(width, height);
     return *this;
 }
 

@@ -1,5 +1,5 @@
 CC := g++
-DEBUG ?= 0
+DEBUG ?= 1
 ifeq '$(DEBUG)' '1'
 	CFLAGS ?= -Wall -MMD -g
 else
