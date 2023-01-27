@@ -15,7 +15,7 @@ lib_dir = -L3rdparty/lib
 .PHONY: all clean mrProper
 .PRECIOUS: $(od)/%.o
 
-all : bin/compareImage bin/main
+all : bin/compareImage bin/main bin/testSceneLoader
 
 bin/% : $(od)/%.o $(OBJECTS)
 	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)

@@ -35,10 +35,12 @@ SceneBuilder SceneBuilder::shininess(unsigned int i) {
 }
 
 SceneBuilder SceneBuilder::directional(Vector direction, Color rgb) {
+    scene->addLight();
     return *this;
 }
 
 SceneBuilder SceneBuilder::point(Point pos, Color color) {
+    scene->addLight();
     return *this;
 }
 
@@ -51,13 +53,16 @@ SceneBuilder SceneBuilder::vertex(Point pos) {
 }
 
 SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int iv3) {
+    scene->addObject();
     return *this;
 }
 
 SceneBuilder SceneBuilder::sphere(Point center, double radius) {
+    scene->addObject();
     return *this;
 }
 
 SceneBuilder SceneBuilder::plane(Point pos, Vector normal) {
+    scene->addObject();
     return *this;
 }
