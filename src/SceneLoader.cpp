@@ -60,8 +60,7 @@ void SceneLoader::size() {
 void SceneLoader::output() {
     try {
         std::string word = getWord();
-        if (word.empty()) builder.output("output.png");
-        else builder.output(word);
+        if (!word.empty()) builder.output(word);
     } catch (std::exception& e) {throw SyntaxException("in output");}
 }
 

@@ -9,6 +9,7 @@ Scene *SceneBuilder::build() {
 }
 
 SceneBuilder SceneBuilder::output(const std::string& outputPath) {
+    scene->setOutputPath(outputPath);
     return *this;
 }
 
