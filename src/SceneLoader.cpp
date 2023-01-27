@@ -65,22 +65,22 @@ void SceneLoader::output() {
 }
 
 void SceneLoader::camera() {
-    try {builder.camera(getDouble(),getDouble(),getDouble(),getDouble(),getDouble(),getDouble(),getDouble(),getDouble(),getDouble(),getDouble());}
+    try {builder.camera(Point(getDouble(),getDouble(),getDouble()),Point(getDouble(),getDouble(),getDouble()),Vector(getDouble(),getDouble(),getDouble()),getDouble());}
     catch (std::exception& e) {throw SyntaxException("in camera");}
 }
 
 void SceneLoader::ambient() {
-    try {builder.ambient(getDouble(), getDouble(), getDouble());}
+    try {builder.ambient(Color(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in ambient");}
 }
 
 void SceneLoader::diffuse() {
-    try {builder.diffuse(getDouble(), getDouble(), getDouble());}
+    try {builder.diffuse(Color(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in diffuse");}
 }
 
 void SceneLoader::specular() {
-    try {builder.specular(getDouble(), getDouble(), getDouble());}
+    try {builder.specular(Color(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in specular");}
 }
 
@@ -90,12 +90,12 @@ void SceneLoader::shininess() {
 }
 
 void SceneLoader::directional() {
-    try {builder.directional(getDouble(), getDouble(), getDouble(), getDouble(), getDouble(), getDouble());}
+    try {builder.directional(Vector(getDouble(), getDouble(), getDouble()), Color(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in directional");}
 }
 
 void SceneLoader::point() {
-    try {builder.point(getDouble(), getDouble(), getDouble(), getDouble(), getDouble(), getDouble());}
+    try {builder.point(Point(getDouble(), getDouble(), getDouble()), Color(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in point");}
 }
 
@@ -105,7 +105,7 @@ void SceneLoader::maxverts() {
 }
 
 void SceneLoader::vertex() {
-    try {builder.vertex(getDouble(), getDouble(), getDouble());}
+    try {builder.vertex(Point(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in vertex");}
 }
 
@@ -115,12 +115,12 @@ void SceneLoader::tri() {
 }
 
 void SceneLoader::sphere() {
-    try {builder.sphere(getDouble(), getDouble(), getDouble(), getDouble());}
+    try {builder.sphere(Point(getDouble(), getDouble(), getDouble()), getDouble());}
     catch (std::exception& e) {throw SyntaxException("in sphere");}
 }
 
 void SceneLoader::plane() {
-    try {builder.plane(getDouble(), getDouble(), getDouble(), getDouble(), getDouble(), getDouble());}
+    try {builder.plane(Point(getDouble(), getDouble(), getDouble()), Vector(getDouble(), getDouble(), getDouble()));}
     catch (std::exception& e) {throw SyntaxException("in plane");}
 }
 

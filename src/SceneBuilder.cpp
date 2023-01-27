@@ -14,19 +14,19 @@ SceneBuilder SceneBuilder::output(const std::string& outputPath) {
 }
 
 SceneBuilder
-SceneBuilder::camera(double x, double y, double z, double u, double v, double w, double m, double n, double o, double f) {
+SceneBuilder::camera(Point from, Point at, Vector up, double fov) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::ambient(double r, double g, double b) {
+SceneBuilder SceneBuilder::ambient(Color color) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::diffuse(double r, double g, double b) {
+SceneBuilder SceneBuilder::diffuse(Color color) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::specular(double r, double g, double b) {
+SceneBuilder SceneBuilder::specular(Color color) {
     return *this;
 }
 
@@ -34,11 +34,11 @@ SceneBuilder SceneBuilder::shininess(unsigned int i) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::directional(double x, double y, double z, double r, double g, double b) {
+SceneBuilder SceneBuilder::directional(Vector direction, Color rgb) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::point(double x, double y, double z, double r, double g, double b) {
+SceneBuilder SceneBuilder::point(Point pos, Color color) {
     return *this;
 }
 
@@ -46,7 +46,7 @@ SceneBuilder SceneBuilder::maxverts(unsigned int max) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::vertex(double x, double y, double z) {
+SceneBuilder SceneBuilder::vertex(Point pos) {
     return *this;
 }
 
@@ -54,10 +54,10 @@ SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int 
     return *this;
 }
 
-SceneBuilder SceneBuilder::sphere(double x, double y, double z, double r) {
+SceneBuilder SceneBuilder::sphere(Point center, double radius) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::plane(double x, double y, double z, double u, double v, double w) {
+SceneBuilder SceneBuilder::plane(Point pos, Vector normal) {
     return *this;
 }
