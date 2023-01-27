@@ -1,11 +1,11 @@
 #include <iostream>
-#include "SceneBuilder.h"
+#include "SceneLoader.h"
 
 int main (int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Argument missing !" << std::endl;
         return EXIT_FAILURE;
     }
-    SceneBuilder(argv[1]).build();
+    SceneLoader(argv[1]).getBuilder().build();
     return EXIT_SUCCESS;
 }

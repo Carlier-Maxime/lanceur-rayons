@@ -6,7 +6,7 @@ else
 	CFLAGS ?= -Wall -MMD
 endif
 od = bin/obj
-OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Image.o $(od)/Scene.o $(od)/SceneBuilder.o
+OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Image.o $(od)/Scene.o $(od)/SceneBuilder.o $(od)/SceneLoader.o
 lib = -lfreeimage
 include_dir = -I3rdparty/include
 lib_dir = -L3rdparty/lib
