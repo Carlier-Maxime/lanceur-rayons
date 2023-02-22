@@ -9,14 +9,18 @@ public:
     Triplet(double x, double y, double z);
     bool operator==(const Triplet& t) const;
     bool operator!=(const Triplet& t) const;
-    static Triplet add(const Triplet& t1,const Triplet& t2);
-    static Triplet sub(const Triplet& t1,const Triplet& t2);
-    static Triplet mul(const Triplet& t1,double scal);
-    static double dot(const Triplet& t1,const Triplet& t2);
-    static Triplet cross(const Triplet& t1,const Triplet& t2);
-    static Triplet times(const Triplet& t1,const Triplet& t2);
-    static double len(const Triplet& t1);
-    static Triplet hat(const Triplet& t1);
+    void operator+=(const Triplet& t);
+    Triplet operator+(const Triplet& t) const;
+    void operator-=(const Triplet& t);
+    Triplet operator-(const Triplet& t) const;
+    void operator*=(double scalar);
+    Triplet operator*(double scalar) const;
+    void operator*=(const Triplet& t);
+    Triplet operator*(const Triplet& t) const;
+    double prodScalar(const Triplet& t) const;
+    Triplet prodVector(const Triplet& t) const;
+    double len() const;
+    Triplet norm() const;
 
 };
 
