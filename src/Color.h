@@ -26,6 +26,8 @@ public:
     void setRGB(double red, double green, double blue);
 
     Color difference(Color clr2) const;
+
+    unsigned char type() override;
 };
 
 #endif //LANCEUR_RAYONS_COLOR_H

@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>
 #include "Triplet.h"
 
 Triplet::Triplet(double x, double y, double z) : x(x), y(y), z(z) {}
@@ -67,5 +67,6 @@ Triplet Triplet::norm() const{
     return operator*(1/len());
 }
 
-
-
+unsigned char Triplet::type() {
+    return 'T';
+}

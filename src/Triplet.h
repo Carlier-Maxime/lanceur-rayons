@@ -21,7 +21,7 @@ public:
     Triplet prodVector(const Triplet& t) const;
     double len() const;
     Triplet norm() const;
-
+    virtual unsigned char type();
 };
 
 #endif //LANCEUR_RAYONS_TRIPLET_H

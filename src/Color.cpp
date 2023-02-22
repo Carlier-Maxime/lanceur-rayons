@@ -70,3 +70,7 @@ Color Color::difference(Color clr2) const {
     }
     return clrD;
 }
+
+unsigned char Color::type() {
+    return 'C';
+}
