@@ -9,8 +9,8 @@ od = bin/obj
 src = src
 OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Image.o $(od)/Scene.o $(od)/Point.o $(od)/Vector.o $(od)/SceneBuilder.o $(od)/SceneLoader.o
 lib = -lfreeimage
-include_dir = -I3rdparty/include
-lib_dir = -L3rdparty/lib
+include_dir =
+lib_dir =
 
 .PHONY: all clean mrProper
 .PRECIOUS: $(od)/%.o
