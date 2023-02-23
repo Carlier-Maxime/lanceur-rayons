@@ -35,12 +35,14 @@ int main(int argc, char *argv[]) {
     if (argc<2 || argc>2) return EXIT_FAILURE;
     Triplet *t1,*t2,*t3=nullptr;
     double a=0,b=0;
+    bool pDotP;
     char* dt1 = strtok(argv[1],",");
     char* op = strtok(nullptr,",");
     char* dt2 = strtok(nullptr,",");
     t1 = buildTriplet(dt1);
     t2 = buildTriplet(dt2);
-    if (!t1 || (!t2 && strcmp(op,"mul")!=0 && strcmp(op,"len")!=0 && strcmp(op,"hat")!=0)) goto finish;
+    bool notT2 = strcmp(op,"mul")==0 || strcmp(op,"len")==0 || strcmp(op,"hat")==0;
+    if (!t1 || (!t2 && !notT2) || (t2 && notT2)) goto finish;
     if (strcmp(op,"mul")==0) a = strtod(dt2, nullptr);
     if (strcmp(op,"add")==0) t3 = t1->add(t2);
     else if (strcmp(op,"sub")==0) t3 = t1->sub(t2);
@@ -51,11 +53,14 @@ int main(int argc, char *argv[]) {
     else if (strcmp(op,"len")==0) b = t1->len();
     else if (strcmp(op,"hat")==0) t3 = t1->hat();
     else goto finish;
-    if (t3 && t3->type()=='T') std::cout << "Interdit" << std::endl;
-    else if (strcmp(op,"dot")==0 || strcmp(op,"len")==0) std::cout << b << std::endl;
-    else std::cout << t3->toString() << std::endl;
+    pDotP = (strcmp(op,"dot")==0 && t1->type()=='P' && t2 && t2->type()=='P');
+    if ((t3 && t3->type()=='T') || pDotP) std::cout << "Interdit" << std::endl;
+    else if (strcmp(op,"dot")==0 || strcmp(op,"len")==0) std::cout << b << ((int) b == b ? ".0" : "") << std::endl;
+    else if (t3) std::cout << t3->toString() << std::endl;
+    else goto finish;
     status = EXIT_SUCCESS;
     finish:
+    if (status!=EXIT_SUCCESS) std::cout << "Interdit" << std::endl;
     delete t1;
     delete t2;
     delete t3;

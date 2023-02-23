@@ -18,4 +18,21 @@ Triplet *Point::add(const Triplet *t) const {
     return tr;
 }
 
+Triplet *Point::sub(const Triplet *t) const {
+    Triplet* tr=Triplet::sub(t);
+    if (t->type()=='P') {
+        auto* v = new Vector(*tr);
+        delete tr;
+        return v;
+    }
+    return tr;
+}
+
+Triplet *Point::mul(double scalar) const {
+    Triplet* tr=Triplet::mul(scalar);
+    auto* p = new Point(*tr);
+    delete tr;
+    return p;
+}
+
 Point::~Point() = default;

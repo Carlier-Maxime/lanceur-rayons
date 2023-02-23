@@ -13,6 +13,10 @@ public:
 
     Triplet *add(const Triplet *t) const override;
     ~Point();
+
+    Triplet *mul(double scalar) const override;
+
+    Triplet *sub(const Triplet *t) const override;
 };
 
 

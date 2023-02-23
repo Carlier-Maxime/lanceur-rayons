@@ -76,3 +76,32 @@ unsigned char Color::type() const {
 }
 
 Color::~Color() = default;
+
+Triplet *Color::add(const Triplet *t) const {
+    Triplet* tr=Triplet::add(t);
+    if (t->type()=='C') {
+        auto* c = new Color(*tr);
+        delete tr;
+        return c;
+    }
+    return tr;
+}
+
+Color::Color(const Triplet &t) : Triplet(t) {}
+
+Triplet *Color::mul(double scalar) const {
+    Triplet* tr=Triplet::mul(scalar);
+    auto* c = new Color(*tr);
+    delete tr;
+    return c;
+}
+
+Triplet *Color::times(const Triplet *t) const {
+    Triplet* tr=Triplet::times(t);
+    if (t->type()=='C') {
+        auto* c = new Color(*tr);
+        delete tr;
+        return c;
+    }
+    return tr;
+}

@@ -1,5 +1,6 @@
 #include <cmath>
 #include <sstream>
+#include <iomanip>
 #include "Triplet.h"
 
 Triplet::Triplet(double x, double y, double z) : x(x), y(y), z(z) {}
@@ -66,7 +67,7 @@ Triplet::Triplet(const Triplet &t) {
 
 std::string Triplet::toString() const {
     std::stringstream ss;
-    ss << type() << " " << x << " " << y << " " << z;
+    ss << type() << " " << x << ((int) x == x ? ".0 " : " ") << y << ((int) y == y ? ".0 " : " ") << z << ((int) z == z ? ".0" : "");
     return ss.str();
 }
 
