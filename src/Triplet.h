@@ -9,21 +9,18 @@ protected:
     double x,y,z;
 public:
     Triplet(double x, double y, double z);
+    Triplet(const Triplet& t);
     bool operator==(const Triplet& t) const;
     bool operator!=(const Triplet& t) const;
-    void operator+=(const Triplet& t);
-    Triplet operator+(const Triplet& t) const;
-    void operator-=(const Triplet& t);
-    Triplet operator-(const Triplet& t) const;
-    void operator*=(double scalar);
-    Triplet operator*(double scalar) const;
-    void operator*=(const Triplet& t);
-    Triplet operator*(const Triplet& t) const;
-    double prodScalar(const Triplet& t) const;
-    Triplet prodVector(const Triplet& t) const;
-    double len() const;
-    Triplet norm() const;
     virtual unsigned char type() const;
+    Triplet* add(const Triplet* t) const;
+    Triplet* sub(const Triplet* t) const;
+    Triplet* mul(double scalar) const;
+    double dot(const Triplet* t) const;
+    Triplet* cross(const Triplet* t) const;
+    Triplet* times(const Triplet* t) const;
+    double len() const;
+    Triplet* hat() const;
 
     friend std::ostream &operator<<(std::ostream &os, const Triplet &triplet);
 };

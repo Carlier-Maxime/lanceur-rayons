@@ -11,67 +11,49 @@ bool Triplet::operator!=(const Triplet& t) const {
     return !(operator==(t));
 }
 
-void Triplet::operator+=(const Triplet &t) {
-    x+=t.x;
-    y+=t.y;
-    z+=t.z;
+unsigned char Triplet::type() const {
+    return 'T';
 }
 
-Triplet Triplet::operator+(const Triplet &t) const {
-    return {x+t.x,y+t.y,z+t.z};
+Triplet *Triplet::add(const Triplet *t) const {
+    return new Triplet(x+t->x,y+t->y,z+t->z);
 }
 
-void Triplet::operator-=(const Triplet &t) {
-    x-=t.x;
-    y-=t.y;
-    z-=t.z;
+Triplet *Triplet::sub(const Triplet *t) const {
+    return new Triplet(x-t->x,y-t->y,z-t->z);
 }
 
-Triplet Triplet::operator-(const Triplet &t) const {
-    return {x-t.x,y-t.y,z-t.z};
+Triplet *Triplet::mul(double scalar) const {
+    return new Triplet(x*scalar,y*scalar,z*scalar);
 }
 
-void Triplet::operator*=(double scalar) {
-    x*=scalar;
-    y*=scalar;
-    z*=scalar;
+double Triplet::dot(const Triplet *t) const {
+    return x*t->x+y*t->y+z*t->z;
 }
 
-Triplet Triplet::operator*(double scalar) const {
-    return {x*scalar,y*scalar,z*scalar};
+Triplet *Triplet::cross(const Triplet *t) const {
+    return new Triplet((y*t->z)-(z*t->y),(z*t->x)-(x*t->z),(x*t->y)-(y*t->x));
 }
 
-void Triplet::operator*=(const Triplet &t) {
-    x*=t.x;
-    y*=t.y;
-    z*=t.z;
+Triplet *Triplet::times(const Triplet *t) const {
+    return new Triplet(x*t->x,y*t->y,z*t->z);
 }
 
-Triplet Triplet::operator*(const Triplet &t) const {
-    return {x*t.x,y*t.y,z*t.z};
-}
-
-double Triplet::prodScalar(const Triplet &t) const {
-    return x*t.x+y*t.y+z*t.z;
-}
-
-Triplet Triplet::prodVector(const Triplet &t) const {
-    return {(y*t.z)-(z*t.y),(z*t.x)-(x*t.z),(x*t.y)-(y*t.x)};
-}
-
-double Triplet::len() const{
+double Triplet::len() const {
     return sqrt(x*x+y*y+z*z);
 }
 
-Triplet Triplet::norm() const{
-    return operator*(1/len());
-}
-
-unsigned char Triplet::type() const {
-    return 'T';
+Triplet *Triplet::hat() const {
+    return mul(1/len());
 }
 
 std::ostream &operator<<(std::ostream &os, const Triplet &triplet) {
     os << triplet.type() << " " << triplet.x << " " << triplet.y << " " << triplet.z;
     return os;
+}
+
+Triplet::Triplet(const Triplet &t) {
+    x=t.x;
+    y=t.y;
+    z=t.z;
 }
