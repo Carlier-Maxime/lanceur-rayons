@@ -2,6 +2,8 @@
 #define LANCEUR_RAYONS_TRIPLET_H
 
 
+#include <ostream>
+
 class Triplet {
 protected:
     double x,y,z;
@@ -21,7 +23,9 @@ public:
     Triplet prodVector(const Triplet& t) const;
     double len() const;
     Triplet norm() const;
-    virtual unsigned char type();
+    virtual unsigned char type() const;
+
+    friend std::ostream &operator<<(std::ostream &os, const Triplet &triplet);
 };
 
 #endif //LANCEUR_RAYONS_TRIPLET_H

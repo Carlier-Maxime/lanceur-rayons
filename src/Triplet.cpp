@@ -67,6 +67,11 @@ Triplet Triplet::norm() const{
     return operator*(1/len());
 }
 
-unsigned char Triplet::type() {
+unsigned char Triplet::type() const {
     return 'T';
+}
+
+std::ostream &operator<<(std::ostream &os, const Triplet &triplet) {
+    os << triplet.type() << " " << triplet.x << " " << triplet.y << " " << triplet.z;
+    return os;
 }
