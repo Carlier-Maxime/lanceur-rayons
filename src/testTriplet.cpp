@@ -6,12 +6,21 @@
 #include "Point.h"
 #include "Color.h"
 
-Triplet* buildTriplet(char* data) {
+Triplet* buildTriplet(const char* data) {
     const char d[] = " ";
-    char type = strtok(data,d)[0];
-    double x = strtod(strtok(nullptr, d), nullptr);
-    double y = strtod(strtok(nullptr, d), nullptr);
-    double z = strtod(strtok(nullptr, d), nullptr);
+    char* cdata = strdup(data);
+    char type = strtok(cdata,d)[0];
+    double coo[3];
+    for (double & i : coo) {
+        char* tmp = strtok(nullptr, d);
+        if (!tmp) {
+            free(cdata);
+            return nullptr;
+        }
+        i=strtod(tmp, nullptr);
+    }
+    free(cdata);
+    double x=coo[0],y=coo[1],z=coo[2];
     switch (type) {
         case 'T': return new Triplet(x,y,z);
         case 'P': return new Point(x,y,z);
@@ -42,12 +51,13 @@ int main(int argc, char *argv[]) {
     else if (strcmp(op,"len")==0) b = t1->len();
     else if (strcmp(op,"hat")==0) t3 = t1->hat();
     else goto finish;
-    if (t3->type()=='T') std::cout << "Interdit" << std::endl;
+    if (t3 && t3->type()=='T') std::cout << "Interdit" << std::endl;
     else if (strcmp(op,"dot")==0 || strcmp(op,"len")==0) std::cout << b << std::endl;
-    else std::cout << t3 << std::endl;
+    else std::cout << t3->toString() << std::endl;
     status = EXIT_SUCCESS;
     finish:
     delete t1;
     delete t2;
+    delete t3;
     return status;
 }

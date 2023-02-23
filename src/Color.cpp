@@ -74,3 +74,5 @@ Color Color::difference(Color clr2) const {
 unsigned char Color::type() const {
     return 'C';
 }
+
+Color::~Color() = default;

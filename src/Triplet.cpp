@@ -1,4 +1,5 @@
 #include <cmath>
+#include <sstream>
 #include "Triplet.h"
 
 Triplet::Triplet(double x, double y, double z) : x(x), y(y), z(z) {}
@@ -16,10 +17,12 @@ unsigned char Triplet::type() const {
 }
 
 Triplet *Triplet::add(const Triplet *t) const {
+    if (!t) return nullptr;
     return new Triplet(x+t->x,y+t->y,z+t->z);
 }
 
 Triplet *Triplet::sub(const Triplet *t) const {
+    if (!t) return nullptr;
     return new Triplet(x-t->x,y-t->y,z-t->z);
 }
 
@@ -28,14 +31,17 @@ Triplet *Triplet::mul(double scalar) const {
 }
 
 double Triplet::dot(const Triplet *t) const {
+    if (!t) return -1;
     return x*t->x+y*t->y+z*t->z;
 }
 
 Triplet *Triplet::cross(const Triplet *t) const {
+    if (!t) return nullptr;
     return new Triplet((y*t->z)-(z*t->y),(z*t->x)-(x*t->z),(x*t->y)-(y*t->x));
 }
 
 Triplet *Triplet::times(const Triplet *t) const {
+    if (!t) return nullptr;
     return new Triplet(x*t->x,y*t->y,z*t->z);
 }
 
@@ -57,3 +63,11 @@ Triplet::Triplet(const Triplet &t) {
     y=t.y;
     z=t.z;
 }
+
+std::string Triplet::toString() const {
+    std::stringstream ss;
+    ss << type() << " " << x << " " << y << " " << z;
+    return ss.str();
+}
+
+Triplet::~Triplet() = default;

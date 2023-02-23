@@ -8,6 +8,7 @@ class Vector : public Triplet {
 public:
     Vector(double u, double v, double w);
     unsigned char type() const override;
+    ~Vector();
 };
 
 

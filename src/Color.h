@@ -28,6 +28,7 @@ public:
     Color difference(Color clr2) const;
 
     unsigned char type() const override;
+    ~Color();
 };
 
 #endif //LANCEUR_RAYONS_COLOR_H
