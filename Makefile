@@ -7,7 +7,7 @@ else
 endif
 od = bin/obj
 src = src
-OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Image.o $(od)/Scene.o $(od)/Point.o $(od)/Vector.o $(od)/SceneBuilder.o $(od)/SceneLoader.o
+OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Scene.o $(od)/Point.o $(od)/Vector.o $(od)/SceneBuilder.o $(od)/SceneLoader.o $(od)/Camera.o $(od)/Image.o
 lib = -lfreeimage
 include_dir =
 lib_dir =

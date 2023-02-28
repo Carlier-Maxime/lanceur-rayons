@@ -15,10 +15,12 @@ SceneBuilder SceneBuilder::output(const std::string& outputPath) {
 
 SceneBuilder
 SceneBuilder::camera(Point from, Point at, Vector up, double fov) {
+    scene->setCamera(Camera(from, at, up, fov));
     return *this;
 }
 
 SceneBuilder SceneBuilder::ambient(Color color) {
+    scene->setAmbient(color);
     return *this;
 }
 
