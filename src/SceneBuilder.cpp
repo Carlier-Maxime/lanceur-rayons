@@ -61,7 +61,9 @@ SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int 
 }
 
 SceneBuilder SceneBuilder::sphere(Point center, double radius) {
-    scene->addObject(Sphere(center,radius));
+    Sphere* s = new Sphere(center,radius);
+    scene->addObject(s);
+    delete s;
     return *this;
 }
 

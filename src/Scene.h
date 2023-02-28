@@ -22,7 +22,7 @@ public:
     unsigned int getHeight() const;
     const std::string &getOutputPath() const;
     void addLight();
-    void addObject(const Object3D& o);
+    void addObject(const Object3D* o);
     unsigned int getNbLight() const;
     unsigned long long int getNbObjects() const;
     void setAmbient(const Color& ambient);

@@ -12,3 +12,7 @@ Sphere::~Sphere() {
 Point* Sphere::intersect(Vector* d) {
     return nullptr; // TODO
 }
+
+Object3D* Sphere::clone() const {
+    return new Sphere(*center,radius);
+}

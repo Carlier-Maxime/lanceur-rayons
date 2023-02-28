@@ -6,8 +6,9 @@
 
 class Object3D {
 public:
-    virtual ~Object3D();
-    virtual Point* intersect(Vector* d);
+    virtual ~Object3D() = 0;
+    virtual Point* intersect(Vector* d) = 0;
+    virtual Object3D* clone() const = 0;
 };
 
 #endif //LANCEUR_RAYONS_OBJECT3D_H
