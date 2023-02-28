@@ -10,7 +10,7 @@ private:
 public:
     Sphere(const Point& center, double radius);
     ~Sphere() override;
-    Point* intersect(Vector* d) override;
+    Point* intersect(Vector* d) const override;
     Object3D* clone() const override;
 };
 

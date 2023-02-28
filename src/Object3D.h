@@ -7,7 +7,7 @@
 class Object3D {
 public:
     virtual ~Object3D() {};
-    virtual Point* intersect(Vector* d) = 0;
+    virtual Point* intersect(Vector* d) const = 0;
     virtual Object3D* clone() const = 0;
 };
 
