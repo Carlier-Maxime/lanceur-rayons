@@ -1,4 +1,5 @@
 #include "SceneBuilder.h"
+#include "Sphere.h"
 
 SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) {
     scene = new Scene(width,height);
@@ -55,16 +56,16 @@ SceneBuilder SceneBuilder::vertex(Point pos) {
 }
 
 SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int iv3) {
-    scene->addObject();
+    scene->addObject({}); // TODO
     return *this;
 }
 
 SceneBuilder SceneBuilder::sphere(Point center, double radius) {
-    scene->addObject();
+    scene->addObject(Sphere(center,radius));
     return *this;
 }
 
 SceneBuilder SceneBuilder::plane(Point pos, Vector normal) {
-    scene->addObject();
+    scene->addObject({}); // TODO
     return *this;
 }

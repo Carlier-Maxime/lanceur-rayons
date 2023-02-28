@@ -1,6 +1,14 @@
 #include "Scene.h"
+#include "Exceptions.h"
 
-Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLight(0), nbObjects(0), outputPath("output.png"), ambient(nullptr), camera(nullptr) {}
+Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLight(0), maxLight(0), nbObjects(0), maxObjects(0), outputPath("output.png"), ambient(nullptr), camera(nullptr), objects(nullptr) {}
+
+Scene::~Scene() {
+    for (unsigned long long i=0; i<nbObjects; i++) {
+        delete objects[i];
+    }
+    free(objects);
+}
 
 void Scene::setOutputPath(std::string path) {
     outputPath = std::move(path);
@@ -22,7 +30,14 @@ void Scene::addLight() {
     nbLight++;
 }
 
-void Scene::addObject() {
+void Scene::addObject(const Object3D& o) {
+    if (nbObjects>=maxObjects) {
+        Object3D** tmp = static_cast<Object3D**>(realloc(objects,maxObjects+128));
+        if (!tmp) throw SceneException("Allocation failed !");
+        objects = tmp;
+        maxObjects+=128;
+    }
+    objects[nbObjects] = new Object3D(o);
     nbObjects++;
 }
 

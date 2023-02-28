@@ -27,3 +27,4 @@ const char *SyntaxException::what() const noexcept {
 }
 
 BuilderException::BuilderException(const std::string &msg) : ExceptionWithMsg(msg) {}
+SceneException::SceneException(const std::string &msg) : ExceptionWithMsg(msg) {}
