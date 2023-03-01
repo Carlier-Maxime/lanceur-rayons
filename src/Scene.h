@@ -25,8 +25,8 @@ public:
     void addObject(const Object3D* o);
     unsigned int getNbLight() const;
     unsigned long long int getNbObjects() const;
-    void setAmbient(const Color& ambient);
-    void setCamera(const Camera& camera);
+    void setAmbient(const Color& color);
+    void setCamera(const Camera& newCamera);
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H

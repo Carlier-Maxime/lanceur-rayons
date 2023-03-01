@@ -49,10 +49,10 @@ unsigned long long int Scene::getNbObjects() const {
     return nbObjects;
 }
 
-void Scene::setAmbient(const Color& ambient) {
-    this->ambient = new Color(ambient);
+void Scene::setAmbient(const Color& color) {
+    this->ambient = new Color(color);
 }
 
-void Scene::setCamera(const Camera& camera) {
-    this->camera = new Camera(camera);
+void Scene::setCamera(const Camera& newCamera) {
+    this->camera = new Camera(newCamera);
 }
