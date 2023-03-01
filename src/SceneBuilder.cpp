@@ -3,7 +3,7 @@
 #include "Triangle.h"
 #include "Plane.h"
 
-SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) {
+SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0) {
     scene = new Scene(width,height);
 }
 
@@ -17,34 +17,37 @@ SceneBuilder SceneBuilder::output(const std::string& outputPath) {
 }
 
 SceneBuilder
-SceneBuilder::camera(Point from, Point at, Vector up, double fov) {
+SceneBuilder::camera(const Point& from, const Point& at, const Vector& up, double fov) {
     scene->setCamera(Camera(from, at, up, fov));
     return *this;
 }
 
-SceneBuilder SceneBuilder::ambient(Color color) {
+SceneBuilder SceneBuilder::ambient(const Color& color) {
     scene->setAmbient(color);
     return *this;
 }
 
-SceneBuilder SceneBuilder::diffuse(Color color) {
+SceneBuilder SceneBuilder::diffuse(const Color& color) {
+    this->_diffuse = new Color(color);
     return *this;
 }
 
-SceneBuilder SceneBuilder::specular(Color color) {
+SceneBuilder SceneBuilder::specular(const Color& color) {
+    this->_specular = new Color(color);
     return *this;
 }
 
 SceneBuilder SceneBuilder::shininess(unsigned int i) {
+    this->_shininess = i;
     return *this;
 }
 
-SceneBuilder SceneBuilder::directional(Vector direction, Color rgb) {
+SceneBuilder SceneBuilder::directional(const Vector& direction, const Color& rgb) {
     scene->addLight();
     return *this;
 }
 
-SceneBuilder SceneBuilder::point(Point pos, Color color) {
+SceneBuilder SceneBuilder::point(const Point& pos, const Color& color) {
     scene->addLight();
     return *this;
 }
@@ -53,27 +56,27 @@ SceneBuilder SceneBuilder::maxverts(unsigned int max) {
     return *this;
 }
 
-SceneBuilder SceneBuilder::vertex(Point pos) {
+SceneBuilder SceneBuilder::vertex(const Point& pos) {
     return *this;
 }
 
 SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int iv3) {
-    Triangle* t = new Triangle();
-    scene->addObject(t);
-    delete t;
-    return *this;
+    return addObject(new Triangle());
 }
 
-SceneBuilder SceneBuilder::sphere(Point center, double radius) {
-    Sphere* s = new Sphere(center,radius);
-    scene->addObject(s);
-    delete s;
-    return *this;
+SceneBuilder SceneBuilder::sphere(const Point& center, double radius) {
+    return addObject(new Sphere(center, radius));
 }
 
-SceneBuilder SceneBuilder::plane(Point pos, Vector normal) {
-    Plane* p = new Plane();
-    scene->addObject(p);
-    delete p;
+SceneBuilder SceneBuilder::plane(const Point& pos, const Vector& normal) {
+    return addObject(new Plane());
+}
+
+SceneBuilder SceneBuilder::addObject(Object3D* object) {
+    object->setDiffuse(*_diffuse);
+    object->setSpecular(*_specular);
+    object->setShininess(_shininess);
+    scene->addObject(object);
+    delete object;
     return *this;
 }

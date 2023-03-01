@@ -10,21 +10,25 @@
 class SceneBuilder {
 private:
     Scene* scene;
+    Color* _diffuse;
+    Color* _specular;
+    unsigned int _shininess;
+    SceneBuilder addObject(Object3D* object);
 public:
     SceneBuilder(unsigned int width, unsigned int height);
     SceneBuilder output(const std::string& outputPath);
-    SceneBuilder camera(Point from, Point at, Vector up, double fov);
-    SceneBuilder ambient(Color color);
-    SceneBuilder diffuse(Color color);
-    SceneBuilder specular(Color color);
+    SceneBuilder camera(const Point& from, const Point& at, const Vector& up, double fov);
+    SceneBuilder ambient(const Color& color);
+    SceneBuilder diffuse(const Color& color);
+    SceneBuilder specular(const Color& color);
     SceneBuilder shininess(unsigned int i);
-    SceneBuilder directional(Vector direction, Color color);
-    SceneBuilder point(Point pos, Color color);
+    SceneBuilder directional(const Vector& direction, const Color& color);
+    SceneBuilder point(const Point& pos, const Color& color);
     SceneBuilder maxverts(unsigned int max);
-    SceneBuilder vertex(Point pos);
+    SceneBuilder vertex(const Point& pos);
     SceneBuilder tri(unsigned iv1, unsigned iv2, unsigned iv3);
-    SceneBuilder sphere(Point center, double radius);
-    SceneBuilder plane(Point pos, Vector normal);
+    SceneBuilder sphere(const Point& center, double radius);
+    SceneBuilder plane(const Point& pos, const Vector& normal);
     Scene* build();
 };
 
