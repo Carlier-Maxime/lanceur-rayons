@@ -2,6 +2,7 @@
 #include "Sphere.h"
 #include "Triangle.h"
 #include "Plane.h"
+#include "Exceptions.h"
 
 SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0) {
     scene = new Scene(width,height);
@@ -28,7 +29,13 @@ SceneBuilder SceneBuilder::ambient(const Color& color) {
 }
 
 SceneBuilder SceneBuilder::diffuse(const Color& color) {
-    this->_diffuse = new Color(color);
+    auto* d = new Color(color);
+    auto *c = dynamic_cast<Color*>(scene->getAmbient()->add(d));
+    bool badColor = c->getR()>1 || c->getG()>1 || c->getB()>1;
+    delete c;
+    if (badColor) throw BuilderException("exceed 1 on one of the components RGB.");
+    delete _diffuse;
+    _diffuse = d;
     return *this;
 }
 

@@ -56,3 +56,7 @@ void Scene::setAmbient(const Color& color) {
 void Scene::setCamera(const Camera& newCamera) {
     this->camera = new Camera(newCamera);
 }
+
+Color *Scene::getAmbient() const {
+    return ambient;
+}

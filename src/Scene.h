@@ -27,6 +27,8 @@ public:
     unsigned long long int getNbObjects() const;
     void setAmbient(const Color& color);
     void setCamera(const Camera& newCamera);
+
+    Color *getAmbient() const;
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H
