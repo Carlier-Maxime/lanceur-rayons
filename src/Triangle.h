@@ -9,6 +9,8 @@ public:
     ~Triangle() override;
     Point* intersect(Vector* d) const override;
     Object3D* clone() const override;
+
+    Vector *getNormal(const Point *p) const override;
 };
 
 #endif //LANCEUR_RAYONS_TRIANGLE_H

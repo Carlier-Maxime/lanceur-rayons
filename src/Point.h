@@ -1,9 +1,7 @@
 #ifndef LANCEUR_RAYONS_POINT_H
 #define LANCEUR_RAYONS_POINT_H
 
-
 #include "Triplet.h"
-#include "Vector.h"
 
 class Point : public Triplet {
 public:
@@ -18,6 +16,5 @@ public:
 
     Triplet *sub(const Triplet *t) const override;
 };
-
 
 #endif //LANCEUR_RAYONS_POINT_H

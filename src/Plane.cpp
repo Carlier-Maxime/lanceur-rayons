@@ -13,3 +13,7 @@ Point* Plane::intersect(Vector* d) const {
 Object3D* Plane::clone() const {
     return new Plane();
 }
+
+Vector *Plane::getNormal(const Point *p) const {
+    return nullptr; // TODO
+}

@@ -13,3 +13,7 @@ Point* Triangle::intersect(Vector* d) const {
 Object3D* Triangle::clone() const {
     return new Triangle();
 }
+
+Vector *Triangle::getNormal(const Point *p) const {
+    return nullptr; // TODO
+}

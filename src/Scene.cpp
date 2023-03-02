@@ -32,7 +32,7 @@ void Scene::addLight() {
 
 void Scene::addObject(const Object3D* o) {
     if (nbObjects>=maxObjects) {
-        Object3D** tmp = static_cast<Object3D**>(realloc(objects,maxObjects+128));
+        auto** tmp = static_cast<Object3D**>(realloc(objects,maxObjects+128));
         if (!tmp) throw SceneException("Allocation failed !");
         objects = tmp;
         maxObjects+=128;
