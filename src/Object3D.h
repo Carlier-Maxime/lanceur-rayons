@@ -18,6 +18,7 @@ public:
     void setDiffuse(const Color& color);
     void setSpecular(const Color& color);
     void setShininess(unsigned int i);
+    virtual Vector* getNormal(const Point* p) const = 0;
 };
 
 #endif //LANCEUR_RAYONS_OBJECT3D_H

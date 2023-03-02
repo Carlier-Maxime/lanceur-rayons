@@ -16,3 +16,10 @@ Point* Sphere::intersect(Vector* d) const {
 Object3D* Sphere::clone() const {
     return new Sphere(*center,radius);
 }
+
+Vector *Sphere::getNormal(const Point* p) const {
+    auto* pcc = p->sub(center);
+    auto* n = dynamic_cast<Vector *>(pcc->hat());
+    delete pcc;
+    return n;
+}
