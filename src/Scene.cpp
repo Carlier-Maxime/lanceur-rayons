@@ -5,7 +5,7 @@
 #define INC_NB_OBJS 128
 #define INC_NB_LIGHTS 32
 
-Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLights(0), maxLights(0), nbObjects(0), maxObjects(0), outputPath("output.png"), ambient(nullptr), camera(nullptr), objects(nullptr) {}
+Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLights(0), maxLights(0), nbObjects(0), maxObjects(0), outputPath("output.png"), ambient(nullptr), camera(nullptr), objects(nullptr), lights(nullptr) {}
 
 Scene::~Scene() {
     for (unsigned long long i=0; i<nbObjects; i++) {
