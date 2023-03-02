@@ -75,3 +75,24 @@ void Scene::setCamera(const Camera& newCamera) {
 Color *Scene::getAmbient() const {
     return ambient;
 }
+
+Color *Scene::getColor(const Object3D *o, const Point *p) const {
+    auto *n = o->getNormal(p);
+    auto *sum = new Color(0.,0.,0.);
+    for (unsigned int i=0; i<nbLights; i++) {
+        auto *dir = lights[i]->getLDir(p);
+        double x = n->dot(dir);
+        if (x<0) x=0;
+        auto *t = lights[i]->getColor()->mul(x);
+        auto *t2 = sum;
+        sum = dynamic_cast<Color *>(sum->add(t));
+        delete t2;
+        delete t;
+        delete dir;
+    }
+    delete n;
+    auto *tmp = sum->times(o->getDiffuse());
+    auto *color = ambient->add(tmp);
+    delete tmp;
+    return dynamic_cast<Color *>(color);
+}

@@ -55,6 +55,7 @@ SceneBuilder SceneBuilder::directional(const Vector& direction, const Color& rgb
     auto *l = new LDirectional(rgb, direction);
     scene->addLight(l);
     delete l;
+    return *this;
 }
 
 SceneBuilder SceneBuilder::point(const Point& pos, const Color& color) {

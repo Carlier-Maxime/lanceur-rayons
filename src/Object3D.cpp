@@ -18,3 +18,7 @@ void Object3D::setSpecular(const Color &color) {
 void Object3D::setShininess(unsigned int i) {
     this->shininess = i;
 }
+
+Color *Object3D::getDiffuse() const {
+    return diffuse;
+}

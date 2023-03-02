@@ -16,6 +16,8 @@ private:
     Camera *camera;
     Object3D **objects;
     Light **lights;
+private:
+    Color *getColor(const Object3D* o, const Point* p) const;
 public:
     Scene(unsigned int width, unsigned int height);
     ~Scene();
@@ -29,7 +31,6 @@ public:
     unsigned long long int getNbObjects() const;
     void setAmbient(const Color& color);
     void setCamera(const Camera& newCamera);
-
     Color *getAmbient() const;
 };
 
