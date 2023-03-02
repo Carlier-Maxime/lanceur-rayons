@@ -12,3 +12,7 @@ Vector *LPoint::getLDir(const Point *p) const {
 LPoint::~LPoint() {
     delete origin;
 }
+
+Light *LPoint::clone() const {
+    return new LPoint(*getColor(), *origin);
+}

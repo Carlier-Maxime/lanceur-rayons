@@ -6,8 +6,10 @@
 class LDirectional : public Light {
 public:
     LDirectional(const Color &color, const Vector& direction);
-
+    ~LDirectional() override;
     Vector *getLDir(const Point *p) const override;
+
+    Light *clone() const override;
 
 private:
     Vector* direction;

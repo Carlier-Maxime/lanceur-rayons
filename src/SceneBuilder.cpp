@@ -3,6 +3,8 @@
 #include "Triangle.h"
 #include "Plane.h"
 #include "Exceptions.h"
+#include "LPoint.h"
+#include "LDirectional.h"
 
 SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0) {
     scene = new Scene(width,height);
@@ -50,12 +52,15 @@ SceneBuilder SceneBuilder::shininess(unsigned int i) {
 }
 
 SceneBuilder SceneBuilder::directional(const Vector& direction, const Color& rgb) {
-    scene->addLight();
-    return *this;
+    auto *l = new LDirectional(rgb, direction);
+    scene->addLight(l);
+    delete l;
 }
 
 SceneBuilder SceneBuilder::point(const Point& pos, const Color& color) {
-    scene->addLight();
+    auto *l = new LPoint(color, pos);
+    scene->addLight(l);
+    delete l;
     return *this;
 }
 

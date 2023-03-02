@@ -5,15 +5,17 @@
 #include "Color.h"
 #include "Camera.h"
 #include "Object3D.h"
+#include "Light.h"
 
 class Scene {
 private:
-    unsigned int width, height, nbLight, maxLight;
+    unsigned int width, height, nbLights, maxLights;
     unsigned long long nbObjects, maxObjects;
     std::string outputPath;
     Color *ambient;
     Camera *camera;
     Object3D **objects;
+    Light **lights;
 public:
     Scene(unsigned int width, unsigned int height);
     ~Scene();
@@ -21,7 +23,7 @@ public:
     unsigned int getWidth() const;
     unsigned int getHeight() const;
     const std::string &getOutputPath() const;
-    void addLight();
+    void addLight(const Light *light);
     void addObject(const Object3D* o);
     unsigned int getNbLight() const;
     unsigned long long int getNbObjects() const;
