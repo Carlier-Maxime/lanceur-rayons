@@ -12,7 +12,7 @@ private:
     unsigned int shininess;
 public:
     Object3D();
-    virtual ~Object3D() {};
+    virtual ~Object3D();
     virtual Point* intersect(Vector* d) const = 0;
     virtual Object3D* clone() const = 0;
     void setDiffuse(const Color& color);
