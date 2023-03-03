@@ -74,7 +74,7 @@ SceneBuilder SceneBuilder::vertex(const Point& pos) {
 }
 
 SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int iv3) {
-    return addObject(new Triangle());
+    return addObject(new Triangle(nullptr, nullptr, nullptr));
 }
 
 SceneBuilder SceneBuilder::sphere(const Point& center, double radius) {

@@ -4,8 +4,10 @@
 #include "Object3D.h"
 
 class Triangle : public Object3D {
+private:
+    Point *a, *b, *c;
 public:
-    Triangle();
+    Triangle(Point *a, Point *b, Point *c);
     ~Triangle() override;
     Point *intersect(const Point *o, const Vector *d) const override;
     Object3D* clone() const override;
