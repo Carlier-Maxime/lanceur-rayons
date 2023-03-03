@@ -13,7 +13,6 @@ private:
     Color* _diffuse;
     Color* _specular;
     unsigned int _shininess;
-    unsigned int nbVertices, maxVertices;
     SceneBuilder addObject(Object3D* object);
 public:
     SceneBuilder(unsigned int width, unsigned int height);

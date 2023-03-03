@@ -6,7 +6,7 @@
 #include "LPoint.h"
 #include "LDirectional.h"
 
-SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0), nbVertices(0), maxVertices(0) {
+SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0) {
     scene = new Scene(width,height);
 }
 
