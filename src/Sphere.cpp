@@ -9,7 +9,7 @@ Sphere::~Sphere() {
     delete center;
 }
 
-Point* Sphere::intersect(Vector* d) const {
+Point * Sphere::intersect(const Point *o, const Vector *d) const {
     return nullptr; // TODO
 }
 

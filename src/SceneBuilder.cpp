@@ -82,7 +82,7 @@ SceneBuilder SceneBuilder::sphere(const Point& center, double radius) {
 }
 
 SceneBuilder SceneBuilder::plane(const Point& pos, const Vector& normal) {
-    return addObject(new Plane());
+    return addObject(new Plane(pos,normal));
 }
 
 SceneBuilder SceneBuilder::addObject(Object3D* object) {
