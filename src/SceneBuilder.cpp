@@ -6,7 +6,7 @@
 #include "LPoint.h"
 #include "LDirectional.h"
 
-SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0) {
+SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0), nbVertices(0), maxVertices(0) {
     scene = new Scene(width,height);
 }
 
@@ -66,15 +66,17 @@ SceneBuilder SceneBuilder::point(const Point& pos, const Color& color) {
 }
 
 SceneBuilder SceneBuilder::maxverts(unsigned int max) {
+    scene->upMaxVertices(max);
     return *this;
 }
 
 SceneBuilder SceneBuilder::vertex(const Point& pos) {
+    scene->addVertex(pos);
     return *this;
 }
 
 SceneBuilder SceneBuilder::tri(unsigned int iv1, unsigned int iv2, unsigned int iv3) {
-    return addObject(new Triangle(nullptr, nullptr, nullptr));
+    return addObject(new Triangle(scene->getVertex(iv1), scene->getVertex(iv2), scene->getVertex(iv3)));
 }
 
 SceneBuilder SceneBuilder::sphere(const Point& center, double radius) {
@@ -92,4 +94,9 @@ SceneBuilder SceneBuilder::addObject(Object3D* object) {
     scene->addObject(object);
     delete object;
     return *this;
+}
+
+SceneBuilder::~SceneBuilder() {
+    delete _diffuse;
+    delete _specular;
 }

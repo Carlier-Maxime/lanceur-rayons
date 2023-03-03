@@ -10,12 +10,13 @@
 class Scene {
 private:
     unsigned int width, height, nbLights, maxLights;
-    unsigned long long nbObjects, maxObjects;
+    unsigned long long nbObjects, maxObjects, nbVertices, maxVertices;
     std::string outputPath;
     Color *ambient;
     Camera *camera;
     Object3D **objects;
     Light **lights;
+    Point **vertices;
 private:
     Color *getColor(const Object3D* o, const Point* p) const;
 public:
@@ -32,6 +33,9 @@ public:
     void setAmbient(const Color& color);
     void setCamera(const Camera& newCamera);
     Color *getAmbient() const;
+    void upMaxVertices(unsigned long long max);
+    void addVertex(const Point& v);
+    Point* getVertex(const unsigned long long i);
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H
