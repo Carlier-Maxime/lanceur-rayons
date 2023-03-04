@@ -25,6 +25,8 @@ Scene::~Scene() {
         delete vertices[i];
     }
     free(vertices);
+    delete camera;
+    delete ambient;
 }
 
 void Scene::setOutputPath(std::string path) {
@@ -135,25 +137,45 @@ Vector * Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned in
     double a = (maxX*(x - (width / 2.) + 0.5)) / (width / 2.);
     double b = (maxY*(y - (height / 2.) + 0.5)) / (height / 2.);
     auto** uvw = camera->getOrthonormal();
-    auto* numD = uvw[0]->mul(a)->add(uvw[1]->mul(b))->sub(uvw[2]);
-    return dynamic_cast<Vector*>(numD->hat());
+    auto* t1 = uvw[0]->mul(a);
+    auto* t2 = uvw[1]->mul(b);
+    auto* t3 = t1->add(t2);
+    auto* numD = t3->sub(uvw[2]);
+    delete uvw[0];
+    delete uvw[1];
+    delete uvw[2];
+    free(uvw);
+    auto* v = numD->hat();
+    delete numD;
+    delete t3;
+    delete t2;
+    delete t1;
+    return dynamic_cast<Vector*>(v);
 }
 
 void Scene::exportPNG() {
-    auto* img=new Image(width,height);
+    auto* img = new Image(width,height);
     auto * pixDim = getDimPixel();
     for(unsigned int i=0;i<width;i++){
         for (unsigned int j=0; j<height; j++) {
             img->setColorPixel(i,j,{0.,0.,0.});
+            if (i==170 && j==102) {
+                img->setPath("test.png");
+            }
             for (unsigned long long k=0; k<nbObjects; k++) {
-                Point* p = objects[k]->intersect(camera->getFrom(), getVectorD(pixDim[0], pixDim[1], i, j));
+                auto *d = getVectorD(pixDim[0], pixDim[1], i, j);
+                Point* p = objects[k]->intersect(camera->getFrom(), d);
+                delete d;
                 if(p){
                     img->setColorPixel(i,j,*ambient);
+                    delete p;
                     break;
                 }
             }
         }
     }
+    free(pixDim);
     img->setPath(outputPath);
     img->save();
+    delete img;
 }

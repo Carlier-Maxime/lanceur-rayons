@@ -10,9 +10,14 @@ Sphere::~Sphere() {
 }
 
 Point* Sphere::intersect(const Point* o, const Vector* d) const {
-    double b = ((o->sub(center))->mul(2))->dot(d);
     auto* tmp = o->sub(center);
+    auto* tmp2 = tmp->mul(2);
+    delete tmp;
+    double b = tmp2->dot(d);
+    delete tmp2;
+    tmp = o->sub(center);
     double c = (tmp->dot(tmp))-(radius*radius);
+    delete tmp;
     double delta=(b*b)-(4*c);
     double t;
     if(delta<0){
@@ -32,7 +37,9 @@ Point* Sphere::intersect(const Point* o, const Vector* d) const {
 
         }
     }
-    Point* p= dynamic_cast<Point*>(o->add(d->mul(t)));
+    tmp = d->mul(t);
+    Point* p= dynamic_cast<Point*>(o->add(tmp));
+    delete tmp;
     return p;
 }
 

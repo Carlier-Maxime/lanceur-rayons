@@ -27,6 +27,9 @@ Vector** Camera::getOrthonormal() {
     ortho[0]= dynamic_cast<Vector *>(u);
     ortho[1]= dynamic_cast<Vector *>(v);
     ortho[2]= dynamic_cast<Vector *>(w);
+    delete numW;
+    delete numU;
+    delete numV;
     return ortho; //
 }
 

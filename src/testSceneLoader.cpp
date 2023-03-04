@@ -15,5 +15,7 @@ int main(int argc, char* argv[]) {
     std::cout << scene->getNbObjects() << std::endl;
     std::cout << scene->getNbLight() << std::endl;
     delete scene;
+    delete builder;
+    delete sl;
     return EXIT_SUCCESS;
 }
