@@ -35,9 +35,9 @@ public:
     Color *getAmbient() const;
     void upMaxVertices(unsigned long long max);
     void addVertex(const Point& v);
-    Point* getVertex(const unsigned long long i);
+    Point* getVertex(unsigned long long i);
     double* getDimPixel();
-    Vector* getVectorD(int i,int j);
+    Vector* getVectorD(unsigned int i, unsigned int j);
     void exportPNG();
 };
 

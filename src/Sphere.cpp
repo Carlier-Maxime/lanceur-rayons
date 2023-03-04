@@ -9,7 +9,7 @@ Sphere::~Sphere() {
     delete center;
 }
 
-Point* Sphere::intersect(const Vector* d,const Point* o) const {
+Point* Sphere::intersect(const Point* o, const Vector* d) const {
     double b = ((o->sub(center))->mul(2))->dot(d);
     auto* tmp = o->sub(center);
     double c = (tmp->dot(tmp))-(radius*radius);
