@@ -6,7 +6,7 @@ Plane::~Plane() {
 
 }
 
-Point* Plane::intersect(Vector* d) const {
+Point* Plane::intersect(Vector* d,Point* o) const {
     return nullptr; // TODO
 }
 

@@ -7,7 +7,7 @@ class Triangle : public Object3D {
 public:
     Triangle();
     ~Triangle() override;
-    Point* intersect(Vector* d) const override;
+    Point* intersect(Vector* d,Point* o) const override;
     Object3D* clone() const override;
 };
 

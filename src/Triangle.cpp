@@ -6,7 +6,7 @@ Triangle::~Triangle() {
 
 }
 
-Point* Triangle::intersect(Vector* d) const {
+Point* Triangle::intersect(Vector* d,Point* o) const {
     return nullptr; // TODO
 }
 

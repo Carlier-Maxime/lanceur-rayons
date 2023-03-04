@@ -13,7 +13,7 @@ private:
 public:
     Camera(const Point& from, const Point& at, const Vector& up, double fov);
     ~Camera();
-    Vector* getOrthonormal();
+    Vector** getOrthonormal();
     double getFov();
 };
 

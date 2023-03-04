@@ -7,7 +7,7 @@ class Plane : public Object3D {
 public:
     Plane();
     ~Plane() override;
-    Point* intersect(Vector* d) const override;
+    Point* intersect(Vector* d,Point* o) const override;
     Object3D* clone() const override;
 };
 

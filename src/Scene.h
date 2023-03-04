@@ -27,6 +27,9 @@ public:
     unsigned long long int getNbObjects() const;
     void setAmbient(const Color& ambient);
     void setCamera(const Camera& camera);
+    double* getDimPixel();
+    Vector* getVectorD(int i,int j);
+    void exportPNG();
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H
