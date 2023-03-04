@@ -69,7 +69,7 @@ void Image::setPath(std::string newPath) {
 }
 
 void Image::save() {
-    if (path.empty()) return;
+    if (path.empty()) throw ImageException("output path is empty !");
     if (!FreeImage_Save(FIF_PNG,img,path.c_str())) throw ImageException("Save failed !");
 }
 

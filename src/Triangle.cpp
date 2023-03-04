@@ -30,7 +30,7 @@ Point * Triangle::intersect(const Point *o, const Vector *d) const {
 }
 
 Object3D* Triangle::clone() const {
-    return new Triangle(nullptr, nullptr, nullptr);
+    return new Triangle(new Point(*a), new Point(*b), new Point(*c));
 }
 
 Vector *Triangle::getNormal(const Point *p) const {

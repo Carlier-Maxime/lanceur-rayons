@@ -125,7 +125,7 @@ void Scene::setCamera(const Camera& newCamera) {
 
 double* Scene::getDimPixel(){
     double pHeight = tan((camera->getFov()/2));
-    double pWidth = pHeight*(this->width/this->height);
+    double pWidth = pHeight*((width*1.0)/height);
     auto* pixDim = static_cast<double*>(malloc(2 * sizeof(double )));
     pixDim[0]=pHeight;
     pixDim[1]=pWidth;
@@ -137,12 +137,11 @@ Vector* Scene::getVectorD(unsigned int i, unsigned int j){
     double pixWidth= pixDim[1];
     double a = (pixWidth*(i-(width/2.)+0.5))/(width/2.);
     double b = (pixHeight*(j-(height/2.)+0.5))/(height/2.);
-    auto* u = dynamic_cast<Vector*>(camera->getOrthonormal()[0]);
-    auto* v = dynamic_cast<Vector*>(camera->getOrthonormal()[1]);
-    auto* w = dynamic_cast<Vector*>(camera->getOrthonormal()[2]);
-    auto* numD = dynamic_cast<Vector*>(u->mul(a)->add(v->mul(b))->sub(w));
-    auto* d= dynamic_cast<Vector*>(numD->hat());
-    return d;
+    auto* u = camera->getOrthonormal()[0];
+    auto* v = camera->getOrthonormal()[1];
+    auto* w = camera->getOrthonormal()[2];
+    auto* numD = u->mul(a)->add(v->mul(b))->sub(w);
+    return dynamic_cast<Vector*>(numD->hat());
 }
 
 void Scene::exportPNG() {
@@ -159,5 +158,6 @@ void Scene::exportPNG() {
             }
         }
     }
+    img->setPath(outputPath);
     img->save();
 }

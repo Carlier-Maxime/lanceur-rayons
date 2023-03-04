@@ -15,6 +15,10 @@ Triplet *Vector::add(const Triplet *t) const {
         auto* p = new Point(*tr);
         delete tr;
         return p;
+    } else if (t->type()=='V') {
+        auto* v = new Vector(*tr);
+        delete tr;
+        return v;
     }
     return tr;
 }
