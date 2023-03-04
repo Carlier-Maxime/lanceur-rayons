@@ -4,6 +4,8 @@
 #include "Triplet.h"
 
 class Color : public Triplet {
+private:
+    static unsigned char to255(double value);
 public:
     Color(double red, double green, double blue);
     Color(unsigned char red,unsigned char green, unsigned char blue);

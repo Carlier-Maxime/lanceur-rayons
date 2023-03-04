@@ -13,15 +13,15 @@ double Color::getB() const {
 }
 
 unsigned char Color::getR255() const {
-    return (unsigned char) (getR()*255);
+    return to255(getR());
 }
 
 unsigned char Color::getG255() const {
-    return (unsigned char) (getG()*255);
+    return to255(getG());
 }
 
 unsigned char Color::getB255() const {
-    return (unsigned char) (getB()*255);
+    return to255(getB());
 }
 
 Color::Color(double red, double green, double blue) : Triplet(red, green, blue) {}
@@ -104,4 +104,10 @@ Triplet *Color::times(const Triplet *t) const {
         return c;
     }
     return tr;
+}
+
+unsigned char Color::to255(double value) {
+    auto n = (unsigned char) (value*255);
+    if (((value*255)-n)==0.5) n++;
+    return n;
 }
