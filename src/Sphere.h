@@ -12,6 +12,7 @@ public:
     ~Sphere() override;
     Point* intersect(Vector* d,Point* o) const override;
     Object3D* clone() const override;
+    void exportPNG();
 };
 
 #endif //LANCEUR_RAYONS_SPHERE_H

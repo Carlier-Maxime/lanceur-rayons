@@ -57,7 +57,9 @@ void Scene::setAmbient(const Color& ambient) {
 }
 
 void Scene::setCamera(const Camera& camera) {
+    camera.getFrom()->type();
     this->camera = new Camera(camera);
+    this->camera->getFrom()->type();
 }
 double* Scene::getDimPixel(){
     double pHeight = tan((camera->getFov()/2));
