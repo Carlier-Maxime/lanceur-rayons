@@ -36,6 +36,9 @@ public:
     void upMaxVertices(unsigned long long max);
     void addVertex(const Point& v);
     Point* getVertex(const unsigned long long i);
+    double* getDimPixel();
+    Vector* getVectorD(int i,int j);
+    void exportPNG();
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H

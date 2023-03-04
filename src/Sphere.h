@@ -14,6 +14,7 @@ public:
     Object3D* clone() const override;
 
     Vector *getNormal(const Point* p) const override;
+    void exportPNG();
 };
 
 #endif //LANCEUR_RAYONS_SPHERE_H

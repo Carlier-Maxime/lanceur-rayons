@@ -12,9 +12,11 @@ private:
     double fov;
 public:
     Camera(const Point& from, const Point& at, const Vector& up, double fov);
+    explicit Camera(const Camera& camera);
     ~Camera();
-    Vector* getOrthonormal();
+    Vector** getOrthonormal();
     double getFov();
+    Point* getFrom() const;
 };
 
 #endif //LANCEUR_RAYONS_CAMERA_H
