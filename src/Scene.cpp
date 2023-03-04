@@ -127,30 +127,26 @@ double* Scene::getDimPixel(){
     double pHeight = tan((camera->getFov()/2));
     double pWidth = pHeight*((width*1.0)/height);
     auto* pixDim = static_cast<double*>(malloc(2 * sizeof(double )));
-    pixDim[0]=pHeight;
-    pixDim[1]=pWidth;
+    pixDim[1]=pHeight;
+    pixDim[0]=pWidth;
     return pixDim;
 }
-Vector* Scene::getVectorD(unsigned int i, unsigned int j){
-    double* pixDim = getDimPixel();
-    double pixHeight= pixDim[0];
-    double pixWidth= pixDim[1];
-    double a = (pixWidth*(i-(width/2.)+0.5))/(width/2.);
-    double b = (pixHeight*(j-(height/2.)+0.5))/(height/2.);
-    auto* u = camera->getOrthonormal()[0];
-    auto* v = camera->getOrthonormal()[1];
-    auto* w = camera->getOrthonormal()[2];
-    auto* numD = u->mul(a)->add(v->mul(b))->sub(w);
+Vector * Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int y) {
+    double a = (maxX*(x - (width / 2.) + 0.5)) / (width / 2.);
+    double b = (maxY*(y - (height / 2.) + 0.5)) / (height / 2.);
+    auto** uvw = camera->getOrthonormal();
+    auto* numD = uvw[0]->mul(a)->add(uvw[1]->mul(b))->sub(uvw[2]);
     return dynamic_cast<Vector*>(numD->hat());
 }
 
 void Scene::exportPNG() {
     auto* img=new Image(width,height);
+    auto * pixDim = getDimPixel();
     for(unsigned int i=0;i<width;i++){
         for (unsigned int j=0; j<height; j++) {
             img->setColorPixel(i,j,{0.,0.,0.});
             for (unsigned long long k=0; k<nbObjects; k++) {
-                Point* p = objects[k]->intersect(camera->getFrom(),getVectorD(i,j));
+                Point* p = objects[k]->intersect(camera->getFrom(), getVectorD(pixDim[0], pixDim[1], i, j));
                 if(p){
                     img->setColorPixel(i,j,*ambient);
                     break;

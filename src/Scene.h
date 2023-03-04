@@ -37,7 +37,7 @@ public:
     void addVertex(const Point& v);
     Point* getVertex(unsigned long long i);
     double* getDimPixel();
-    Vector* getVectorD(unsigned int i, unsigned int j);
+    Vector *getVectorD(double maxX, double maxY, unsigned int x, unsigned int y);
     void exportPNG();
 };
 

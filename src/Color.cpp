@@ -107,7 +107,5 @@ Triplet *Color::times(const Triplet *t) const {
 }
 
 unsigned char Color::to255(double value) {
-    auto n = (unsigned char) (value*255);
-    if (((value*255)-n)==0.5) n++;
-    return n;
+    return (unsigned char) (value*255+0.5);
 }
