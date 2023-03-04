@@ -88,8 +88,8 @@ SceneBuilder SceneBuilder::plane(const Point& pos, const Vector& normal) {
 }
 
 SceneBuilder SceneBuilder::addObject(Object3D* object) {
-    object->setDiffuse(*_diffuse);
-    object->setSpecular(*_specular);
+    if (_diffuse) object->setDiffuse(*_diffuse);
+    if (_specular) object->setSpecular(*_specular);
     object->setShininess(_shininess);
     scene->addObject(object);
     delete object;

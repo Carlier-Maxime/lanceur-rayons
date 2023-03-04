@@ -120,10 +120,9 @@ Point *Scene::getVertex(const unsigned long long int i) {
 }
 
 void Scene::setCamera(const Camera& newCamera) {
-    newCamera.getFrom()->type();
     this->camera = new Camera(newCamera);
-    this->camera->getFrom()->type();
 }
+
 double* Scene::getDimPixel(){
     double pHeight = tan((camera->getFov()/2));
     double pWidth = pHeight*(this->width/this->height);

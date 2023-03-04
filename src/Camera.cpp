@@ -1,6 +1,5 @@
 #include "Camera.h"
 #include <cmath>
-#include <iostream>
 
 Camera::Camera(const Point& from, const Point& at, const Vector& up, double fov) {
     this->from = new Point(from);
@@ -41,6 +40,4 @@ Point* Camera::getFrom() const {
     return from;
 }
 
-Camera::Camera(const Camera& camera) {
-    Camera(*(camera.from),*(camera.at),*(camera.up),camera.fov);
-}
+Camera::Camera(const Camera& camera) : Camera(*(camera.from),*(camera.at),*(camera.up),camera.fov) {}

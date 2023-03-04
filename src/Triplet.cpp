@@ -59,11 +59,7 @@ std::ostream &operator<<(std::ostream &os, const Triplet &triplet) {
     return os;
 }
 
-Triplet::Triplet(const Triplet &t) {
-    x=t.x;
-    y=t.y;
-    z=t.z;
-}
+Triplet::Triplet(const Triplet &t) : Triplet(t.x, t.y, t.z) {}
 
 std::string Triplet::toString() const {
     std::stringstream ss;
