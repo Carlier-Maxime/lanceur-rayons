@@ -15,7 +15,7 @@ lib_dir =
 .PHONY: all clean mrProper
 .PRECIOUS: $(od)/%.o
 
-all : bin/compareImage bin/main bin/testSceneLoader bin/testTriplet
+all : bin/compareImage bin/rayTracer bin/testSceneLoader bin/testTriplet
 
 bin/% : $(od)/%.o $(OBJECTS)
 	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)

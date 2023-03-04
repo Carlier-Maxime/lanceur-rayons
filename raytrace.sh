@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Pour connaître l'emplacement du script compare.sh
-MYPATH=$(dirname "$0")
+MY_PATH=$(dirname "$0")
 
-# java -Dapple.awt.UIElement=true -jar $MYPATH/dlbraytracer.jar $1 2>&1
-
-echo "Pas encore réalisé"
+"$MY_PATH"/bin/rayTracer "$1"
