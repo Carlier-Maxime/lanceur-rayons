@@ -146,6 +146,7 @@ Vector* Scene::getVectorD(unsigned int i, unsigned int j){
 
 void Scene::exportPNG() {
     auto* img=new Image(width,height);
+    unsigned long long nbPixelPaint=0;
     for(unsigned int i=0;i<height;i++){
         for (unsigned int j=0; j<width; j++) {
             img->setColorPixel(j,i,{0.,0.,0.});
@@ -153,6 +154,7 @@ void Scene::exportPNG() {
                 Point* p = objects[k]->intersect(camera->getFrom(),getVectorD(i,j));
                 if(p){
                     img->setColorPixel(j,i,*ambient);
+                    nbPixelPaint++;
                     break;
                 }
             }

@@ -67,25 +67,29 @@ void SceneLoader::output() {
 
 void SceneLoader::camera() {
     if (!builder) throw SyntaxException("camera before size");
-    try {builder->camera(Point(getDouble(),getDouble(),getDouble()),Point(getDouble(),getDouble(),getDouble()),Vector(getDouble(),getDouble(),getDouble()),getDouble());}
+    Point from = Point(getTriplet());
+    Point at = Point(getTriplet());
+    Vector up = Vector(getTriplet());
+    double fov = getDouble();
+    try {builder->camera(from,at, up, fov);}
     catch (std::exception& e) {throw SyntaxException("in camera");}
 }
 
 void SceneLoader::ambient() {
     if (!builder) throw SyntaxException("ambient before size");
-    try {builder->ambient(Color(getDouble(), getDouble(), getDouble()));}
+    try {builder->ambient(Color(getTriplet()));}
     catch (std::exception& e) {throw SyntaxException("in ambient");}
 }
 
 void SceneLoader::diffuse() {
     if (!builder) throw SyntaxException("diffuse before size");
-    try {builder->diffuse(Color(getDouble(), getDouble(), getDouble()));}
+    try {builder->diffuse(Color(getTriplet()));}
     catch (std::exception& e) {throw SyntaxException("in diffuse");}
 }
 
 void SceneLoader::specular() {
     if (!builder) throw SyntaxException("specular before size");
-    try {builder->specular(Color(getDouble(), getDouble(), getDouble()));}
+    try {builder->specular(Color(getTriplet()));}
     catch (std::exception& e) {throw SyntaxException("in specular");}
 }
 
@@ -97,13 +101,17 @@ void SceneLoader::shininess() {
 
 void SceneLoader::directional() {
     if (!builder) throw SyntaxException("directional before size");
-    try {builder->directional(Vector(getDouble(), getDouble(), getDouble()), Color(getDouble(), getDouble(), getDouble()));}
+    Vector direction = Vector(getTriplet());
+    Color color = Color(getTriplet());
+    try {builder->directional(direction, color);}
     catch (std::exception& e) {throw SyntaxException("in directional");}
 }
 
 void SceneLoader::point() {
     if (!builder) throw SyntaxException("point before size");
-    try {builder->point(Point(getDouble(), getDouble(), getDouble()), Color(getDouble(), getDouble(), getDouble()));}
+    Point pos = Point(getTriplet());
+    Color color = Color(getTriplet());
+    try {builder->point(pos,color);}
     catch (std::exception& e) {throw SyntaxException("in point");}
 }
 
@@ -115,28 +123,41 @@ void SceneLoader::maxverts() {
 
 void SceneLoader::vertex() {
     if (!builder) throw SyntaxException("vertex before size");
-    try {builder->vertex(Point(getDouble(), getDouble(), getDouble()));}
+    try {builder->vertex(Point(getTriplet()));}
     catch (std::exception& e) {throw SyntaxException("in vertex");}
 }
 
 void SceneLoader::tri() {
     if (!builder) throw SyntaxException("tri before size");
-    try {builder->tri(getUint(), getUint(), getUint());}
+    uint iv1 = getUint();
+    uint iv2 = getUint();
+    uint iv3 = getUint();
+    try {builder->tri(iv1, iv2, iv3);}
     catch (std::exception& e) {throw SyntaxException("in tri");}
 }
 
 void SceneLoader::sphere() {
     if (!builder) throw SyntaxException("sphere before size");
-    try {builder->sphere(Point(getDouble(), getDouble(), getDouble()), getDouble());}
+    Point center = Point(getTriplet());
+    try {builder->sphere(center, getDouble());}
     catch (std::exception& e) {throw SyntaxException("in sphere");}
 }
 
 void SceneLoader::plane() {
     if (!builder) throw SyntaxException("plane before size");
-    try {builder->plane(Point(getDouble(), getDouble(), getDouble()), Vector(getDouble(), getDouble(), getDouble()));}
+    Point pos = Point(getTriplet());
+    Vector normal = Vector(getTriplet());
+    try {builder->plane(pos, normal);}
     catch (std::exception& e) {throw SyntaxException("in plane");}
 }
 
 SceneBuilder* SceneLoader::getBuilder() {
     return builder;
+}
+
+Triplet SceneLoader::getTriplet() {
+    double x=getDouble();
+    double y=getDouble();
+    double z=getDouble();
+    return {x, y, z};
 }

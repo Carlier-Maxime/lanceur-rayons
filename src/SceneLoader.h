@@ -28,6 +28,7 @@ private:
     std::string getWord();
     unsigned int getUint();
     double getDouble();
+    Triplet getTriplet();
 public:
     explicit SceneLoader(const std::string& filepath);
     SceneBuilder* getBuilder();
