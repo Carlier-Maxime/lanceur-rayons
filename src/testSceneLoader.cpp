@@ -6,7 +6,10 @@ int main(int argc, char* argv[]) {
         std::cerr << "Argument missing !" << std::endl;
         return EXIT_FAILURE;
     }
-    Scene* scene = SceneLoader(argv[1]).getBuilder().build();
+    std::string file = argv[1];
+    auto* sl = new SceneLoader(file);
+    auto* builder = sl->getBuilder();
+    Scene* scene = builder->build();
     std::cout << scene->getOutputPath() << std::endl;
     std::cout << scene->getWidth() * scene->getHeight() << std::endl;
     std::cout << scene->getNbObjects() << std::endl;

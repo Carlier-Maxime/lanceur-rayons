@@ -8,7 +8,7 @@ int main (int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
     Image::init();
-    Scene *scene = SceneLoader(argv[1]).getBuilder().build();
+    Scene *scene = SceneLoader(argv[1]).getBuilder()->build();
     scene->exportPNG();
     delete scene;
     Image::free();

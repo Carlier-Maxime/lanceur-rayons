@@ -9,7 +9,7 @@
 class SceneLoader {
 private:
     bool builderIsInit;
-    SceneBuilder builder;
+    SceneBuilder* builder;
     std::stringstream ss;
     void size();
     void output();
@@ -30,7 +30,7 @@ private:
     double getDouble();
 public:
     explicit SceneLoader(const std::string& filepath);
-    SceneBuilder getBuilder();
+    SceneBuilder* getBuilder();
 };
 
 
