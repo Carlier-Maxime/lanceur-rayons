@@ -8,7 +8,7 @@
 #include "LPoint.h"
 #include "LDirectional.h"
 
-SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(nullptr), _specular(nullptr), _shininess(0) {
+SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(0.,0,0), _specular(0.,0,0), _shininess(0) {
     scene = new Scene(width,height);
 }
 
@@ -32,19 +32,15 @@ SceneBuilder* SceneBuilder::ambient(const Color& color) {
 }
 
 SceneBuilder* SceneBuilder::diffuse(const Color& color) {
-    auto* d = new Color(color);
-    auto *c = dynamic_cast<Color*>(scene->getAmbient()->add(d));
-    bool badColor = c->getR()>1 || c->getG()>1 || c->getB()>1;
-    delete c;
+    Color c = Color(scene->getAmbient().add(color));
+    bool badColor = c.getR()>1 || c.getG()>1 || c.getB()>1;
     if (badColor) throw BuilderException("exceed 1 on one of the components RGB.");
-    delete _diffuse;
-    _diffuse = d;
+    _diffuse = color;
     return this;
 }
 
 SceneBuilder* SceneBuilder::specular(const Color& color) {
-    delete _specular;
-    _specular = new Color(color);
+    _specular = color;
     return this;
 }
 
@@ -90,15 +86,12 @@ SceneBuilder* SceneBuilder::plane(const Point& pos, const Vector& normal) {
 }
 
 SceneBuilder* SceneBuilder::addObject(Object3D* object) {
-    if (_diffuse) object->setDiffuse(*_diffuse);
-    if (_specular) object->setSpecular(*_specular);
+    object->setDiffuse(_diffuse);
+    object->setSpecular(_specular);
     object->setShininess(_shininess);
     scene->addObject(object);
     delete object;
     return this;
 }
 
-SceneBuilder::~SceneBuilder() {
-    delete _diffuse;
-    delete _specular;
-}
+SceneBuilder::~SceneBuilder() = default;

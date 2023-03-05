@@ -10,8 +10,8 @@
 class SceneBuilder {
 private:
     Scene* scene;
-    Color* _diffuse;
-    Color* _specular;
+    Color _diffuse;
+    Color _specular;
     unsigned int _shininess;
     SceneBuilder* addObject(Object3D* object);
 public:
