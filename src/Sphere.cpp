@@ -7,7 +7,7 @@ Point* Sphere::intersect(const Point &o, const Vector &d) const {
     double b = oc.mul(2).dot(d);
     double c = (oc.dot(oc))-(radius*radius);
     double delta=(b*b)-(4*c);
-    double t;
+    double t=0;
     if(delta<0) return nullptr;
     if(delta==0) t=(-b)/(2);
     if(delta>0){

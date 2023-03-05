@@ -1,9 +1,9 @@
 CC := g++
 DEBUG ?= 1
 ifeq '$(DEBUG)' '1'
-	CFLAGS ?= -Wall -MMD -g
+	CFLAGS ?= -Wall -MMD -O3 -g
 else
-	CFLAGS ?= -Wall -MMD
+	CFLAGS ?= -Wall -MMD -O3
 endif
 od = bin/obj
 src = src
