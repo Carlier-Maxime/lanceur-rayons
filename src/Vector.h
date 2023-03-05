@@ -22,6 +22,9 @@ public:
     Vector add(const Vector& v) const;
     using Triplet::add;
     Triplet *mul_ptr(double scalar) const override;
+    Vector mul(double scalar) const;
+    Triplet *hat_ptr() const override;
+    Vector hat() const;
 };
 
 

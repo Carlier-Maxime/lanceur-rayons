@@ -7,14 +7,12 @@
 
 class Light {
 private:
-    Color* color;
+    Color color;
 public:
     explicit Light(const Color& color);
     virtual ~Light();
-    virtual Vector* getLDir(const Point* p) const = 0;
-
-    Color *getColor() const;
-
+    virtual Vector getLDir(const Point &p) const = 0;
+    Color getColor() const;
     virtual Light *clone() const = 0;
 };
 

@@ -36,6 +36,10 @@ Triplet *Vector::mul_ptr(double scalar) const {
     return new Vector(mul(scalar));
 }
 
+Vector Vector::mul(double scalar) const {
+    return Vector(Triplet::baseMul(scalar));
+}
+
 Triplet *Vector::cross(const Triplet *t) const {
     if (t->type()=='V') return new Vector(cross(*t));
     return Triplet::cross(t);
@@ -43,6 +47,14 @@ Triplet *Vector::cross(const Triplet *t) const {
 
 Vector Vector::cross(const Vector &v) const {
     return Vector(Triplet::cross(v));
+}
+
+Triplet *Vector::hat_ptr() const {
+    return new Vector(hat());
+}
+
+Vector Vector::hat() const {
+    return Vector(Triplet::baseHat());
 }
 
 Vector::~Vector() = default;

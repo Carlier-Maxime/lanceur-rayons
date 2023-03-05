@@ -7,6 +7,8 @@
 class Triplet {
 protected:
     double x,y,z;
+    Triplet baseMul(double scalar) const;
+    Triplet baseHat() const;
 public:
     Triplet(double x, double y, double z);
     Triplet(const Triplet& t);
@@ -18,7 +20,6 @@ public:
     virtual Triplet* sub(const Triplet* t) const;
     Triplet sub(const Triplet& t) const;
     virtual Triplet* mul_ptr(double scalar) const;
-    Triplet mul(double scalar) const;
     double dot(const Triplet* t) const;
     double dot(const Triplet& t) const;
     virtual Triplet* cross(const Triplet* t) const;
@@ -27,8 +28,6 @@ public:
     Triplet times(const Triplet& t) const;
     double len() const;
     virtual Triplet* hat_ptr() const;
-    Triplet hat() const;
-
     friend std::ostream &operator<<(std::ostream &os, const Triplet &triplet);
     std::string toString() const;
     virtual ~Triplet();

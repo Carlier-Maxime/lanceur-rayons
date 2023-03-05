@@ -7,20 +7,19 @@
 
 class Object3D {
 private:
-    Color *diffuse;
-    Color *specular;
+    Color diffuse;
+    Color specular;
     unsigned int shininess;
 public:
     Object3D();
     virtual ~Object3D();
-    virtual Point *intersect(const Point *o, const Vector *d) const = 0;
+    virtual Point* intersect(const Point &o, const Vector &d) const = 0;
     virtual Object3D* clone() const = 0;
     void setDiffuse(const Color& color);
     void setSpecular(const Color& color);
     void setShininess(unsigned int i);
-    virtual Vector* getNormal(const Point* p) const = 0;
-
-    Color *getDiffuse() const;
+    virtual Vector getNormal(const Point &p) const = 0;
+    Color getDiffuse() const;
 };
 
 #endif //LANCEUR_RAYONS_OBJECT3D_H

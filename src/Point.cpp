@@ -28,7 +28,7 @@ Vector Point::sub(const Point &p) const {
 }
 
 Triplet *Point::mul_ptr(double scalar) const {
-    return new Point(mul(scalar));
+    return new Point(baseMul(scalar));
 }
 
 Point::~Point() = default;

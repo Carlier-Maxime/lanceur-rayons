@@ -1,11 +1,9 @@
 #include "Light.h"
 
-Light::Light(const Color &color) : color(new Color(color)) {}
+Light::Light(const Color &color) : color(color) {}
 
-Color *Light::getColor() const {
+Color Light::getColor() const {
     return color;
 }
 
-Light::~Light() {
-    delete color;
-}
+Light::~Light() = default;

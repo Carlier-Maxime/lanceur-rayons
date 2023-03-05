@@ -36,10 +36,10 @@ Triplet Triplet::sub(const Triplet& t) const {
 }
 
 Triplet *Triplet::mul_ptr(double scalar) const {
-    return new Triplet(mul(scalar));
+    return new Triplet(baseMul(scalar));
 }
 
-Triplet Triplet::mul(double scalar) const {
+Triplet Triplet::baseMul(double scalar) const {
     return {x*scalar,y*scalar,z*scalar};
 }
 
@@ -78,8 +78,8 @@ Triplet *Triplet::hat_ptr() const {
     return mul_ptr(1 / len());
 }
 
-Triplet Triplet::hat() const {
-    return mul(1 / len());
+Triplet Triplet::baseHat() const {
+    return baseMul(1 / len());
 }
 
 std::ostream &operator<<(std::ostream &os, const Triplet &triplet) {

@@ -1,18 +1,13 @@
 #include "LPoint.h"
 
-LPoint::LPoint(const Color &color, const Point& origin) : Light(color), origin(new Point(origin)) {}
+LPoint::LPoint(const Color &color, const Point& origin) : Light(color), origin(origin) {}
 
-Vector *LPoint::getLDir(const Point *p) const {
-    auto* t = origin->sub(p);
-    auto* dir = dynamic_cast<Vector*>(t->hat_ptr());
-    delete t;
-    return dir;
+Vector LPoint::getLDir(const Point &p) const {
+    return origin.sub(p).hat();
 }
 
-LPoint::~LPoint() {
-    delete origin;
-}
+LPoint::~LPoint() = default;
 
 Light *LPoint::clone() const {
-    return new LPoint(*getColor(), *origin);
+    return new LPoint(getColor(), origin);
 }

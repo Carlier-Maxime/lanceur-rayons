@@ -9,7 +9,7 @@
 #define INC_NB_LIGHTS 32
 
 Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLights(0), maxLights(0),
-nbObjects(0), maxObjects(0), nbVertices(0), maxVertices(0), outputPath("output.png"), ambient(nullptr),
+nbObjects(0), maxObjects(0), nbVertices(0), maxVertices(0), outputPath("output.png"), ambient(0.,0,0),
 camera(nullptr), objects(nullptr), lights(nullptr), vertices(nullptr) {}
 
 Scene::~Scene() {
@@ -26,7 +26,6 @@ Scene::~Scene() {
     }
     free(vertices);
     delete camera;
-    delete ambient;
 }
 
 void Scene::setOutputPath(std::string path) {
@@ -76,32 +75,22 @@ unsigned long long int Scene::getNbObjects() const {
 }
 
 void Scene::setAmbient(const Color& color) {
-    this->ambient = new Color(color);
+    this->ambient = color;
 }
 
-Color *Scene::getAmbient() const {
+Color Scene::getAmbient() const {
     return ambient;
 }
 
-Color *Scene::getColor(const Object3D *o, const Point *p) const {
-    auto *n = o->getNormal(p);
-    auto *sum = new Color(0.,0.,0.);
+Color Scene::getColor(const Object3D *o, const Point& p) const {
+    Vector n = o->getNormal(p);
+    Color sum = Color(0.,0.,0.);
     for (unsigned int i=0; i<nbLights; i++) {
-        auto *dir = lights[i]->getLDir(p);
-        double x = n->dot(dir);
+        double x = n.dot(lights[i]->getLDir(p));
         if (x<0) x=0;
-        auto *t = lights[i]->getColor()->mul_ptr(x);
-        auto *t2 = sum;
-        sum = dynamic_cast<Color *>(sum->add(t));
-        delete t2;
-        delete t;
-        delete dir;
+        sum = Color(sum.add(lights[i]->getColor().mul(x)));
     }
-    delete n;
-    auto *tmp = sum->times(o->getDiffuse());
-    auto *color = ambient->add(tmp);
-    delete tmp;
-    return dynamic_cast<Color *>(color);
+    return Color(ambient.add(sum.times(o->getDiffuse())));
 }
 
 void Scene::upMaxVertices(unsigned long long int max) {
@@ -128,34 +117,20 @@ void Scene::setCamera(const Camera& newCamera) {
 double* Scene::getDimPixel(){
     double pHeight = tan((camera->getFov()/2));
     double pWidth = pHeight*((width*1.0)/height);
-    auto* pixDim = static_cast<double*>(malloc(2 * sizeof(double )));
-    pixDim[1]=pHeight;
-    pixDim[0]=pWidth;
-    return pixDim;
+    return new double[2] {pWidth, pHeight};
 }
-Vector * Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int y) {
+Vector Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int y) {
     double a = (maxX*(x - (width / 2.) + 0.5)) / (width / 2.);
     double b = (maxY*(y - (height / 2.) + 0.5)) / (height / 2.);
-    auto** uvw = camera->getOrthonormal();
-    auto* t1 = uvw[0]->mul_ptr(a);
-    auto* t2 = uvw[1]->mul_ptr(b);
-    auto* t3 = t1->add(t2);
-    auto* numD = t3->sub(uvw[2]);
-    delete uvw[0];
-    delete uvw[1];
-    delete uvw[2];
-    free(uvw);
-    auto* v = numD->hat_ptr();
-    delete numD;
-    delete t3;
-    delete t2;
-    delete t1;
-    return dynamic_cast<Vector*>(v);
+    auto* uvw = camera->getOrthonormal();
+    Vector d = (uvw[0].mul(a)).add((uvw[1].mul(b))).sub(uvw[2]).hat();
+    delete uvw;
+    return d;
 }
 
 void Scene::exportPNG() {
     auto* img = new Image(width,height);
-    auto * pixDim = getDimPixel();
+    auto* pixDim = getDimPixel();
     for(unsigned int i=0;i<width;i++){
         for (unsigned int j=0; j<height; j++) {
             img->setColorPixel(i,j,{0.,0.,0.});
@@ -163,18 +138,17 @@ void Scene::exportPNG() {
                 img->setPath("test.png");
             }
             for (unsigned long long k=0; k<nbObjects; k++) {
-                auto *d = getVectorD(pixDim[0], pixDim[1], i, j);
+                Vector d = getVectorD(pixDim[0], pixDim[1], i, j);
                 Point* p = objects[k]->intersect(camera->getFrom(), d);
-                delete d;
                 if(p){
-                    img->setColorPixel(i,j,*ambient);
+                    img->setColorPixel(i,j,ambient);
                     delete p;
                     break;
                 }
             }
         }
     }
-    free(pixDim);
+    delete pixDim;
     img->setPath(outputPath);
     img->save();
     delete img;

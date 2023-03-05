@@ -12,13 +12,13 @@ private:
     unsigned int width, height, nbLights, maxLights;
     unsigned long long nbObjects, maxObjects, nbVertices, maxVertices;
     std::string outputPath;
-    Color *ambient;
+    Color ambient;
     Camera *camera;
     Object3D **objects;
     Light **lights;
     Point **vertices;
 private:
-    Color *getColor(const Object3D* o, const Point* p) const;
+    Color getColor(const Object3D* o, const Point& p) const;
 public:
     Scene(unsigned int width, unsigned int height);
     ~Scene();
@@ -32,12 +32,12 @@ public:
     unsigned long long int getNbObjects() const;
     void setAmbient(const Color& color);
     void setCamera(const Camera& newCamera);
-    Color *getAmbient() const;
+    Color getAmbient() const;
     void upMaxVertices(unsigned long long max);
     void addVertex(const Point& v);
     Point* getVertex(unsigned long long i);
     double* getDimPixel();
-    Vector *getVectorD(double maxX, double maxY, unsigned int x, unsigned int y);
+    Vector getVectorD(double maxX, double maxY, unsigned int x, unsigned int y);
     void exportPNG();
 };
 

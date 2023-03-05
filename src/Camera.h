@@ -6,17 +6,16 @@
 
 class Camera {
 private:
-    Point* from;
-    Point* at;
-    Vector* up;
+    Point from;
+    Point at;
+    Vector up;
     double fov;
 public:
     Camera(const Point& from, const Point& at, const Vector& up, double fov);
     explicit Camera(const Camera& camera);
-    ~Camera();
-    Vector** getOrthonormal();
-    double getFov();
-    Point* getFrom() const;
+    Vector* getOrthonormal();
+    double getFov() const;
+    Point getFrom() const;
 };
 
 #endif //LANCEUR_RAYONS_CAMERA_H

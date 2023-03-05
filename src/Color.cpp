@@ -89,7 +89,11 @@ Color Color::add(const Color &c) const {
 Color::Color(const Triplet &t) : Triplet(t) {}
 
 Triplet *Color::mul_ptr(double scalar) const {
-    return new Color(mul(scalar));
+    return new Color(baseMul(scalar));
+}
+
+Color Color::mul(double scalar) const {
+    return Color(baseMul(scalar));
 }
 
 Triplet *Color::times(const Triplet *t) const {

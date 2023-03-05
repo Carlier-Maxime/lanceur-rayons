@@ -31,6 +31,7 @@ public:
     Color add(const Color& c) const;
     using Triplet::add;
     Triplet *mul_ptr(double scalar) const override;
+    Color mul(double scalar) const;
     Triplet *times(const Triplet *t) const override;
     Color times(const Color& c) const;
     using Triplet::times;
