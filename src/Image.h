@@ -2,7 +2,7 @@
 #define LANCEUR_RAYONS_IMAGE_H
 
 #include <string>
-#include "Color.h"
+#include "triplet/Color.h"
 typedef struct FIBITMAP FIBITMAP;
 
 class Image {

@@ -2,10 +2,10 @@
 #define LANCEUR_RAYONS_SCENE_H
 
 #include <string>
-#include "Color.h"
-#include "Camera.h"
-#include "Object3D.h"
-#include "Light.h"
+#include "../triplet/Color.h"
+#include "../Camera.h"
+#include "../object3d/Object3D.h"
+#include "../light/Light.h"
 
 class Scene {
 private:

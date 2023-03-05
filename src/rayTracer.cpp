@@ -1,5 +1,5 @@
 #include <iostream>
-#include "SceneLoader.h"
+#include "scene/SceneLoader.h"
 #include "Image.h"
 
 int main (int argc, char* argv[]) {

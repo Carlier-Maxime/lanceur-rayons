@@ -1,9 +1,9 @@
 #ifndef LANCEUR_RAYONS_OBJECT3D_H
 #define LANCEUR_RAYONS_OBJECT3D_H
 
-#include "Point.h"
-#include "Vector.h"
-#include "Color.h"
+#include "../triplet/Point.h"
+#include "../triplet/Vector.h"
+#include "../triplet/Color.h"
 
 class Object3D {
 private:

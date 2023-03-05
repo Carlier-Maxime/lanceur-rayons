@@ -3,9 +3,9 @@
 
 #include <string>
 #include "Scene.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Color.h"
+#include "../triplet/Point.h"
+#include "../triplet/Vector.h"
+#include "../triplet/Color.h"
 
 class SceneBuilder {
 private:

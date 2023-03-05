@@ -1,7 +1,7 @@
 #include <sstream>
 #include <fstream>
 #include "SceneLoader.h"
-#include "Exceptions.h"
+#include "../Exceptions.h"
 
 SceneLoader::SceneLoader(const std::string& filepath) : builder(nullptr) {
     std::ifstream file(filepath);

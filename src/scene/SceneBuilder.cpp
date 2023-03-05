@@ -1,12 +1,12 @@
 #include "SceneBuilder.h"
 
 #include <utility>
-#include "Sphere.h"
-#include "Triangle.h"
-#include "Plane.h"
-#include "Exceptions.h"
-#include "LPoint.h"
-#include "LDirectional.h"
+#include "../object3d/Sphere.h"
+#include "../object3d/Triangle.h"
+#include "../object3d/Plane.h"
+#include "../Exceptions.h"
+#include "../light/LPoint.h"
+#include "../light/LDirectional.h"
 
 SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(0.,0,0), _specular(0.,0,0), _shininess(0) {
     scene = new Scene(width,height);

@@ -1,9 +1,9 @@
 #ifndef LANCEUR_RAYONS_LIGHT_H
 #define LANCEUR_RAYONS_LIGHT_H
 
-#include "Color.h"
-#include "Vector.h"
-#include "Point.h"
+#include "../triplet/Color.h"
+#include "../triplet/Vector.h"
+#include "../triplet/Point.h"
 
 class Light {
 private:

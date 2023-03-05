@@ -6,10 +6,14 @@ else
 	CFLAGS ?= -Wall -MMD -O3
 endif
 od = bin/obj
+odl = $(od)/light
+odo = $(od)/object3d
+ods = $(od)/scene
+odt = $(od)/triplet
 src = src
-CMP_OBJS = $(od)/Image.o $(od)/Exceptions.o $(od)/Color.o $(od)/Triplet.o
-MTH_OBJS = $(od)/Triplet.o $(od)/Color.o $(od)/Point.o $(od)/Vector.o $(od)/Exceptions.o
-OBJECTS = $(od)/Exceptions.o $(od)/Triplet.o $(od)/Color.o $(od)/Scene.o $(od)/Point.o $(od)/Vector.o $(od)/SceneBuilder.o $(od)/SceneLoader.o $(od)/Camera.o $(od)/Object3D.o $(od)/Sphere.o $(od)/Triangle.o $(od)/Plane.o $(od)/Light.o $(od)/LPoint.o $(od)/LDirectional.o $(od)/Image.o
+CMP_OBJS = $(od)/Image.o $(od)/Exceptions.o $(odt)/Color.o $(odt)/Triplet.o
+MTH_OBJS = $(odt)/Triplet.o $(odt)/Color.o $(odt)/Point.o $(odt)/Vector.o $(od)/Exceptions.o
+OBJECTS = $(od)/Exceptions.o $(odt)/Triplet.o $(odt)/Color.o $(ods)/Scene.o $(odt)/Point.o $(odt)/Vector.o $(ods)/SceneBuilder.o $(ods)/SceneLoader.o $(od)/Camera.o $(odo)/Object3D.o $(odo)/Sphere.o $(odo)/Triangle.o $(odo)/Plane.o $(odl)/Light.o $(odl)/LPoint.o $(odl)/LDirectional.o $(od)/Image.o
 lib = -lfreeimage
 include_dir =
 lib_dir =
@@ -22,7 +26,10 @@ all : bin/compareImage bin/testTriplet bin/testSceneLoader bin/rayTracer
 bin/compareImage : $(od)/compareImage.o $(CMP_OBJS)
 	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)
 
-bin/testTriplet : $(od)/testTriplet.o $(MTH_OBJS)
+bin/testTriplet : $(odt)/testTriplet.o $(MTH_OBJS)
+	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)
+
+bin/testSceneLoader : $(ods)/testSceneLoader.o $(OBJECTS)
 	$(CC) $^ -o $@ $(lib) $(include_dir) $(lib_dir)
 
 bin/% : $(od)/%.o $(OBJECTS)
@@ -30,6 +37,10 @@ bin/% : $(od)/%.o $(OBJECTS)
 
 $(od)/%.o : $(src)/%.cpp
 	@mkdir -p $(od)
+	@mkdir -p $(odl)
+	@mkdir -p $(odo)
+	@mkdir -p $(ods)
+	@mkdir -p $(odt)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

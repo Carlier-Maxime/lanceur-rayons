@@ -1,7 +1,7 @@
 #include "Scene.h"
-#include "Exceptions.h"
-#include "Light.h"
-#include "Image.h"
+#include "../Exceptions.h"
+#include "../light/Light.h"
+#include "../Image.h"
 #include <cmath>
 
 
