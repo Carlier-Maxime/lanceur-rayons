@@ -10,10 +10,12 @@ private:
     Point at;
     Vector up;
     double fov;
+    Vector* uvw;
 public:
     Camera(const Point& from, const Point& at, const Vector& up, double fov);
-    explicit Camera(const Camera& camera);
-    Vector* getOrthonormal();
+    Camera(const Camera& camera);
+    ~Camera();
+    const Vector* getOrthonormal();
     double getFov() const;
     Point getFrom() const;
 };
