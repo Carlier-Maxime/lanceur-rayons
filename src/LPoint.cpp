@@ -4,7 +4,7 @@ LPoint::LPoint(const Color &color, const Point& origin) : Light(color), origin(n
 
 Vector *LPoint::getLDir(const Point *p) const {
     auto* t = origin->sub(p);
-    auto* dir = dynamic_cast<Vector*>(t->hat());
+    auto* dir = dynamic_cast<Vector*>(t->hat_ptr());
     delete t;
     return dir;
 }

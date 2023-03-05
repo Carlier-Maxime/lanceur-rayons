@@ -14,7 +14,7 @@ Point * Plane::intersect(const Point *o, const Vector *d) const {
     double a = tmp->dot(normal);
     delete tmp;
     double t = a/b;
-    tmp = d->mul(t);
+    tmp = d->mul_ptr(t);
     auto* p = o->add(tmp);
     delete tmp;
     return dynamic_cast<Point *>(p);

@@ -16,13 +16,13 @@ Camera::~Camera() {
 
 Vector** Camera::getOrthonormal() {
     Triplet* numW= from->sub(at);
-    Triplet* w = numW->hat();
+    Triplet* w = numW->hat_ptr();
 
     Triplet* numU= up->cross(w);
-    Triplet * u=numU->hat();
+    Triplet * u= numU->hat_ptr();
 
     Triplet* numV= w->cross(u);
-    Triplet* v= numV->hat();
+    Triplet* v= numV->hat_ptr();
     auto** ortho = static_cast<Vector **>(malloc(3*sizeof(Vector*)));
     ortho[0]= dynamic_cast<Vector *>(u);
     ortho[1]= dynamic_cast<Vector *>(v);

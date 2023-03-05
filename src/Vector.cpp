@@ -10,44 +10,39 @@ unsigned char Vector::type() const {
 Vector::Vector(const Triplet &t) : Triplet(t) {}
 
 Triplet *Vector::add(const Triplet *t) const {
-    Triplet* tr=Triplet::add(t);
-    if (t->type()=='P') {
-        auto* p = new Point(*tr);
-        delete tr;
-        return p;
-    } else if (t->type()=='V') {
-        auto* v = new Vector(*tr);
-        delete tr;
-        return v;
-    }
-    return tr;
+    if (t->type()=='P') return new Point(add(*t));
+    if (t->type()=='V') return new Vector(add(*t));
+    return Triplet::add(t);
+}
+
+Point Vector::add(const Point &p) const {
+    return Point(Triplet::add(p));
+}
+
+Vector Vector::add(const Vector &v) const {
+    return Vector(Triplet::add(v));
 }
 
 Triplet *Vector::sub(const Triplet *t) const {
-    Triplet* tr=Triplet::sub(t);
-    if (t->type()=='V') {
-        auto* v = new Vector(*tr);
-        delete tr;
-        return v;
-    }
-    return tr;
+    if (t->type()=='V') return new Vector(sub(*t));
+    return Triplet::sub(t);
 }
 
-Triplet *Vector::mul(double scalar) const {
-    Triplet* tr=Triplet::mul(scalar);
-    auto* v = new Vector(*tr);
-    delete tr;
-    return v;
+Vector Vector::sub(const Vector &v) const {
+    return Vector(Triplet::sub(v));
+}
+
+Triplet *Vector::mul_ptr(double scalar) const {
+    return new Vector(mul(scalar));
 }
 
 Triplet *Vector::cross(const Triplet *t) const {
-    Triplet* tr=Triplet::cross(t);
-    if (t->type()=='V') {
-        auto* v = new Vector(*tr);
-        delete tr;
-        return v;
-    }
-    return tr;
+    if (t->type()=='V') return new Vector(cross(*t));
+    return Triplet::cross(t);
+}
+
+Vector Vector::cross(const Vector &v) const {
+    return Vector(Triplet::cross(v));
 }
 
 Vector::~Vector() = default;

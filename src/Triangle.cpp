@@ -37,7 +37,7 @@ Vector *Triangle::getNormal(const Point *p) const {
     auto* t1 = b->sub(a);
     auto *t2 = c->sub(a);
     auto *t3 = t1->cross(t2);
-    auto *n = t3->hat();
+    auto *n = t3->hat_ptr();
     delete t1;
     delete t2;
     delete t3;

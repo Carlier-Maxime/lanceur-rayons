@@ -90,7 +90,7 @@ Color *Scene::getColor(const Object3D *o, const Point *p) const {
         auto *dir = lights[i]->getLDir(p);
         double x = n->dot(dir);
         if (x<0) x=0;
-        auto *t = lights[i]->getColor()->mul(x);
+        auto *t = lights[i]->getColor()->mul_ptr(x);
         auto *t2 = sum;
         sum = dynamic_cast<Color *>(sum->add(t));
         delete t2;
@@ -137,15 +137,15 @@ Vector * Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned in
     double a = (maxX*(x - (width / 2.) + 0.5)) / (width / 2.);
     double b = (maxY*(y - (height / 2.) + 0.5)) / (height / 2.);
     auto** uvw = camera->getOrthonormal();
-    auto* t1 = uvw[0]->mul(a);
-    auto* t2 = uvw[1]->mul(b);
+    auto* t1 = uvw[0]->mul_ptr(a);
+    auto* t2 = uvw[1]->mul_ptr(b);
     auto* t3 = t1->add(t2);
     auto* numD = t3->sub(uvw[2]);
     delete uvw[0];
     delete uvw[1];
     delete uvw[2];
     free(uvw);
-    auto* v = numD->hat();
+    auto* v = numD->hat_ptr();
     delete numD;
     delete t3;
     delete t2;

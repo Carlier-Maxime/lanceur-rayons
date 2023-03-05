@@ -19,16 +19,28 @@ unsigned char Triplet::type() const {
 
 Triplet *Triplet::add(const Triplet *t) const {
     if (!t) return nullptr;
-    return new Triplet(x+t->x,y+t->y,z+t->z);
+    return new Triplet(add(*t));
+}
+
+Triplet Triplet::add(const Triplet &t) const {
+    return {x+t.x,y+t.y,z+t.z};
 }
 
 Triplet *Triplet::sub(const Triplet *t) const {
     if (!t) return nullptr;
-    return new Triplet(x-t->x,y-t->y,z-t->z);
+    return new Triplet(sub(*t));
 }
 
-Triplet *Triplet::mul(double scalar) const {
-    return new Triplet(x*scalar,y*scalar,z*scalar);
+Triplet Triplet::sub(const Triplet& t) const {
+    return {x-t.x,y-t.y,z-t.z};
+}
+
+Triplet *Triplet::mul_ptr(double scalar) const {
+    return new Triplet(mul(scalar));
+}
+
+Triplet Triplet::mul(double scalar) const {
+    return {x*scalar,y*scalar,z*scalar};
 }
 
 double Triplet::dot(const Triplet *t) const {
@@ -36,22 +48,38 @@ double Triplet::dot(const Triplet *t) const {
     return x*t->x+y*t->y+z*t->z;
 }
 
+double Triplet::dot(const Triplet &t) const {
+    return dot(&t);
+}
+
 Triplet *Triplet::cross(const Triplet *t) const {
     if (!t) return nullptr;
-    return new Triplet((y*t->z)-(z*t->y),(z*t->x)-(x*t->z),(x*t->y)-(y*t->x));
+    return new Triplet(cross(*t));
+}
+
+Triplet Triplet::cross(const Triplet &t) const {
+    return {(y*t.z)-(z*t.y),(z*t.x)-(x*t.z),(x*t.y)-(y*t.x)};
 }
 
 Triplet *Triplet::times(const Triplet *t) const {
     if (!t) return nullptr;
-    return new Triplet(x*t->x,y*t->y,z*t->z);
+    return new Triplet(times(*t));
+}
+
+Triplet Triplet::times(const Triplet &t) const {
+    return {x*t.x,y*t.y,z*t.z};
 }
 
 double Triplet::len() const {
     return sqrt(x*x+y*y+z*z);
 }
 
-Triplet *Triplet::hat() const {
-    return mul(1/len());
+Triplet *Triplet::hat_ptr() const {
+    return mul_ptr(1 / len());
+}
+
+Triplet Triplet::hat() const {
+    return mul(1 / len());
 }
 
 std::ostream &operator<<(std::ostream &os, const Triplet &triplet) {

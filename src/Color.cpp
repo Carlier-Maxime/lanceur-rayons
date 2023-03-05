@@ -61,7 +61,7 @@ void Color::setRGB(double red, double green, double blue) {
     z=blue;
 }
 
-Color Color::difference(Color clr2) const {
+Color Color::difference(const Color& clr2) const {
     Color clrD = Color(0.,0.,0.);
     if (getR() != clr2.getR() || getG() != clr2.getG() || getB() != clr2.getB()) {
         clrD.setR((getR()>clr2.getR()) ? getR()-clr2.getR() : clr2.getR()-getR());
@@ -78,32 +78,27 @@ unsigned char Color::type() const {
 Color::~Color() = default;
 
 Triplet *Color::add(const Triplet *t) const {
-    Triplet* tr=Triplet::add(t);
-    if (t->type()=='C') {
-        auto* c = new Color(*tr);
-        delete tr;
-        return c;
-    }
-    return tr;
+    if (t->type()=='C') return new Color(add(*t));
+    return Triplet::add(t);
+}
+
+Color Color::add(const Color &c) const {
+    return Color(Triplet::add(c));
 }
 
 Color::Color(const Triplet &t) : Triplet(t) {}
 
-Triplet *Color::mul(double scalar) const {
-    Triplet* tr=Triplet::mul(scalar);
-    auto* c = new Color(*tr);
-    delete tr;
-    return c;
+Triplet *Color::mul_ptr(double scalar) const {
+    return new Color(mul(scalar));
 }
 
 Triplet *Color::times(const Triplet *t) const {
-    Triplet* tr=Triplet::times(t);
-    if (t->type()=='C') {
-        auto* c = new Color(*tr);
-        delete tr;
-        return c;
-    }
-    return tr;
+    if (t->type()=='C') return new Color(times(*t));
+    return Triplet::times(t);
+}
+
+Color Color::times(const Color &c) const {
+    return Color(Triplet::times(c));
 }
 
 unsigned char Color::to255(double value) {

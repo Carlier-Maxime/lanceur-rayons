@@ -10,30 +10,25 @@ unsigned char Point::type() const {
 Point::Point(const Triplet &t) : Triplet(t) {}
 
 Triplet *Point::add(const Triplet *t) const {
-    Triplet* tr=Triplet::add(t);
-    if (t->type()=='V') {
-        auto* p = new Point(*tr);
-        delete tr;
-        return p;
-    }
-    return tr;
+    if (t->type()=='V') return new Point(add(*t));
+    return Triplet::add(t);
+}
+
+Point Point::add(const Vector &v) const {
+    return Point(Triplet::add(v));
 }
 
 Triplet *Point::sub(const Triplet *t) const {
-    Triplet* tr=Triplet::sub(t);
-    if (t->type()=='P') {
-        auto* v = new Vector(*tr);
-        delete tr;
-        return v;
-    }
-    return tr;
+    if (t->type()=='P') return new Vector(sub(*t));
+    return Triplet::sub(t);
 }
 
-Triplet *Point::mul(double scalar) const {
-    Triplet* tr=Triplet::mul(scalar);
-    auto* p = new Point(*tr);
-    delete tr;
-    return p;
+Vector Point::sub(const Point &p) const {
+    return Vector(Triplet::sub(p));
+}
+
+Triplet *Point::mul_ptr(double scalar) const {
+    return new Point(mul(scalar));
 }
 
 Point::~Point() = default;

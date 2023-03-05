@@ -11,7 +11,7 @@ Sphere::~Sphere() {
 
 Point* Sphere::intersect(const Point* o, const Vector* d) const {
     auto* tmp = o->sub(center);
-    auto* tmp2 = tmp->mul(2);
+    auto* tmp2 = tmp->mul_ptr(2);
     delete tmp;
     double b = tmp2->dot(d);
     delete tmp2;
@@ -37,7 +37,7 @@ Point* Sphere::intersect(const Point* o, const Vector* d) const {
 
         }
     }
-    tmp = d->mul(t);
+    tmp = d->mul_ptr(t);
     Point* p= dynamic_cast<Point*>(o->add(tmp));
     delete tmp;
     return p;
@@ -50,7 +50,7 @@ Object3D* Sphere::clone() const {
 
 Vector *Sphere::getNormal(const Point* p) const {
     auto* pcc = p->sub(center);
-    auto* n = dynamic_cast<Vector *>(pcc->hat());
+    auto* n = dynamic_cast<Vector *>(pcc->hat_ptr());
     delete pcc;
     return n;
 }
