@@ -124,7 +124,7 @@ Vector Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int 
     double b = (maxY*(y - (height / 2.) + 0.5)) / (height / 2.);
     auto* uvw = camera->getOrthonormal();
     Vector d = (uvw[0].mul(a)).add((uvw[1].mul(b))).sub(uvw[2]).hat();
-    delete uvw;
+    delete[] uvw;
     return d;
 }
 
@@ -148,7 +148,7 @@ void Scene::exportPNG() {
             }
         }
     }
-    delete pixDim;
+    delete[] pixDim;
     img->setPath(outputPath);
     img->save();
     delete img;
