@@ -31,6 +31,7 @@ SceneLoader::SceneLoader(const std::string& filepath) : builder(nullptr) {
                 else if (word=="tri") tri();
                 else if (word=="sphere") sphere();
                 else if (word=="plane") plane();
+                else if (word=="shadow") shadow();
             } else throw SyntaxException("Invalid argument !");
         } catch (SyntaxException& e){e.setLine(idLine); throw;}
     }
@@ -148,6 +149,11 @@ void SceneLoader::plane() {
     Point pos = Point(getTriplet());
     Vector normal = Vector(getTriplet());
     try {builder->plane(pos, normal);}
+    catch (std::exception& e) {throw SyntaxException("in plane");}
+}
+
+void SceneLoader::shadow() {
+    try {builder->shadow(getWord()=="true");}
     catch (std::exception& e) {throw SyntaxException("in plane");}
 }
 

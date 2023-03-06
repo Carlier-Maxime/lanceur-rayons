@@ -25,6 +25,7 @@ private:
     void tri();
     void sphere();
     void plane();
+    void shadow();
     std::string getWord();
     unsigned int getUint();
     double getDouble();

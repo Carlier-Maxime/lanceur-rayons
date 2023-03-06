@@ -1,7 +1,7 @@
 CC := g++
 DEBUG ?= 1
 ifeq '$(DEBUG)' '1'
-	CFLAGS ?= -Wall -MMD -O3 -g
+	CFLAGS ?= -Wall -MMD -g
 else
 	CFLAGS ?= -Wall -MMD -O3
 endif

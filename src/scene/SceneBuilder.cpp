@@ -93,4 +93,9 @@ SceneBuilder* SceneBuilder::addObject(Object3D* object) {
     return this;
 }
 
+SceneBuilder *SceneBuilder::shadow(bool shadow) {
+    scene->setShadow(shadow);
+    return this;
+}
+
 SceneBuilder::~SceneBuilder() = default;

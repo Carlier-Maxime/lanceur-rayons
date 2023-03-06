@@ -10,7 +10,7 @@
 
 Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLights(0), maxLights(0),
 nbObjects(0), maxObjects(0), nbVertices(0), maxVertices(0), outputPath("output.png"), ambient(0.,0,0),
-camera(nullptr), objects(nullptr), lights(nullptr), vertices(nullptr) {}
+camera(nullptr), objects(nullptr), lights(nullptr), vertices(nullptr), shadow(false) {}
 
 Scene::~Scene() {
     for (unsigned long long i=0; i<nbObjects; i++) {
@@ -86,9 +86,23 @@ Color Scene::getColor(const Object3D *o, const Point& p) const {
     Vector n = o->getNormal(p);
     Color sum = Color(0.,0.,0.);
     for (unsigned int i=0; i<nbLights; i++) {
-        double x = n.dot(lights[i]->getLDir(p));
-        if (x<0) x=0;
-        sum = Color(sum.add(lights[i]->getColor().mul(x)));
+        Vector lDir = lights[i]->getLDir(p);
+        bool blocked = false;
+        if (shadow) {
+            for (unsigned long long k=0; k<nbObjects; k++) {
+                Point* p2 = objects[k]->intersect(p, lDir);
+                if(p2 && p2->sub(p).len()>0.001){
+                    blocked = true;
+                    break;
+                }
+                delete p2;
+            }
+        }
+        if (!blocked) {
+            double x = n.dot(lDir);
+            if (x<0) x=0;
+            sum = Color(sum.add(lights[i]->getColor().mul(x)));
+        }
     }
     return Color(ambient.add(sum.times(o->getDiffuse())));
 }
@@ -139,7 +153,7 @@ void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned
             delete p;
             p=tmp;
             object=objects[k];
-        }
+        } else delete tmp;
     }
     if (p) {
         img->setColorPixel(i,j, getColor(object,*p));
@@ -159,4 +173,8 @@ void Scene::exportPNG() {
     img->setPath(outputPath);
     img->save();
     delete img;
+}
+
+void Scene::setShadow(bool shadow) {
+    Scene::shadow = shadow;
 }

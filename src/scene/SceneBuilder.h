@@ -30,6 +30,7 @@ public:
     SceneBuilder* tri(unsigned iv1, unsigned iv2, unsigned iv3);
     SceneBuilder* sphere(const Point& center, double radius);
     SceneBuilder* plane(const Point& pos, const Vector& normal);
+    SceneBuilder* shadow(bool shadow);
     Scene* build();
 };
 

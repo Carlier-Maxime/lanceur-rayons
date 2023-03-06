@@ -9,6 +9,7 @@ Point* Plane::intersect(const Point &o, const Vector &d) const {
     if (b==0) return nullptr;
     double a = pos.sub(o).dot(normal);
     double t = a/b;
+    if (t<0) return nullptr;
     return new Point(o.add(d.mul(t)));
 }
 

@@ -18,6 +18,7 @@ private:
     Object3D **objects;
     Light **lights;
     Point **vertices;
+    bool shadow;
 private:
     Color getColor(const Object3D* o, const Point& p) const;
 public:
@@ -40,7 +41,7 @@ public:
     double* getDimPixel();
     Vector getVectorD(double maxX, double maxY, unsigned int x, unsigned int y);
     void exportPNG();
-
+    void setShadow(bool shadow);
     void pixelProcessing(Image *img, double *pixDim, unsigned int i, unsigned int j);
 };
 
