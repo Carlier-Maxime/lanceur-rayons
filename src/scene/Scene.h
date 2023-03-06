@@ -43,6 +43,7 @@ public:
     void exportPNG();
     void setShadow(bool shadow);
     void pixelProcessing(Image *img, double *pixDim, unsigned int i, unsigned int j);
+    void rayTrace(Image *img, double* pixDim, unsigned int x, unsigned int y, unsigned int width, unsigned int height);
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H

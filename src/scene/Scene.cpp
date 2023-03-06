@@ -1,9 +1,7 @@
 #include "Scene.h"
 #include "../Exceptions.h"
-#include "../light/Light.h"
-#include "../Image.h"
 #include <cmath>
-
+#include <thread>
 
 #define INC_NB_OBJS 128
 #define INC_NB_LIGHTS 32
@@ -161,14 +159,26 @@ void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned
     }
 }
 
-void Scene::exportPNG() {
-    auto* img = new Image(width,height);
-    auto* pixDim = getDimPixel();
-    for(unsigned int i=0;i<width;i++){
-        for (unsigned int j=0; j<height; j++) {
+void Scene::rayTrace(Image* img, double* pixDim, unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
+    for(unsigned int i=x;i<x+width;i++){
+        for (unsigned int j=y; j<y+height; j++) {
             pixelProcessing(img,pixDim,i,j);
         }
     }
+}
+
+void Scene::exportPNG() {
+    auto* img = new Image(width,height);
+    auto* pixDim = getDimPixel();
+    unsigned int nbThread = std::thread::hardware_concurrency();
+    auto* ts = new std::thread[nbThread];
+    for (unsigned int i=0; i<nbThread; i++) {
+        ts[i] = std::thread(&Scene::rayTrace,this,img,pixDim,0,i*(height/nbThread),width,height/nbThread);
+    }
+    for (unsigned int i=0; i<nbThread; i++) {
+        ts[i].join();
+    }
+    delete[] ts;
     delete[] pixDim;
     img->setPath(outputPath);
     img->save();
