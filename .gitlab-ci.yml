@@ -40,9 +40,9 @@ premieresimages:
   stage: basic
   script: "cd tests; ./tests4.sh"
 
-# imagescouleur:
-#   stage: basic
-#   script: "cd tests; ./tests5.sh"
+imagescouleur:
+  stage: basic
+  script: "cd tests; ./tests5.sh"
 
 # plansettriangles:
 #   stage: basic

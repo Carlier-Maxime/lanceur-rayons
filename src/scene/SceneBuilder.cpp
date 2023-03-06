@@ -90,7 +90,6 @@ SceneBuilder* SceneBuilder::addObject(Object3D* object) {
     object->setSpecular(_specular);
     object->setShininess(_shininess);
     scene->addObject(object);
-    delete object;
     return this;
 }
 

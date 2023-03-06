@@ -6,6 +6,7 @@
 #include "../Camera.h"
 #include "../object3d/Object3D.h"
 #include "../light/Light.h"
+#include "../Image.h"
 
 class Scene {
 private:
@@ -27,7 +28,7 @@ public:
     unsigned int getHeight() const;
     const std::string &getOutputPath() const;
     void addLight(const Light *light);
-    void addObject(const Object3D* o);
+    void addObject(Object3D* o);
     unsigned int getNbLight() const;
     unsigned long long int getNbObjects() const;
     void setAmbient(const Color& color);
@@ -39,6 +40,8 @@ public:
     double* getDimPixel();
     Vector getVectorD(double maxX, double maxY, unsigned int x, unsigned int y);
     void exportPNG();
+
+    void pixelProcessing(Image *img, double *pixDim, unsigned int i, unsigned int j);
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H

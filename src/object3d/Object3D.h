@@ -14,7 +14,6 @@ public:
     Object3D();
     virtual ~Object3D();
     virtual Point* intersect(const Point &o, const Vector &d) const = 0;
-    virtual Object3D* clone() const = 0;
     void setDiffuse(const Color& color);
     void setSpecular(const Color& color);
     void setShininess(unsigned int i);

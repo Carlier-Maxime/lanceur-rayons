@@ -11,7 +11,6 @@ public:
     Plane(const Point& pos, const Vector& normal);
     ~Plane() override;
     Point* intersect(const Point &o, const Vector &d) const override;
-    Object3D* clone() const override;
     Vector getNormal(const Point &p) const override;
 };
 

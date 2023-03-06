@@ -20,10 +20,6 @@ Point* Sphere::intersect(const Point &o, const Vector &d) const {
 }
 
 
-Object3D* Sphere::clone() const {
-    return new Sphere(center,radius);
-}
-
 Vector Sphere::getNormal(const Point &p) const {
     return p.sub(center).hat();
 }

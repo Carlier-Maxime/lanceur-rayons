@@ -55,14 +55,14 @@ void Scene::addLight(const Light *light) {
     nbLights++;
 }
 
-void Scene::addObject(const Object3D* o) {
+void Scene::addObject(Object3D* o) {
     if (nbObjects>=maxObjects) {
         auto** tmp = static_cast<Object3D**>(realloc(objects,maxObjects+INC_NB_OBJS));
         if (!tmp) throw SceneException("Allocation failed !");
         objects = tmp;
         maxObjects+=INC_NB_OBJS;
     }
-    objects[nbObjects] = o->clone();
+    objects[nbObjects] = o;
     nbObjects++;
 }
 
@@ -127,24 +127,32 @@ Vector Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int 
     return d;
 }
 
+void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned int j) {
+    img->setColorPixel(i,j,{0.,0.,0.});
+    Point *p = nullptr;
+    Object3D *object = nullptr;
+    for (unsigned long long k=0; k<nbObjects; k++) {
+        Point from = camera->getFrom();
+        Vector d = getVectorD(pixDim[0], pixDim[1], i, j);
+        Point* tmp = objects[k]->intersect(from, d);
+        if(tmp && (!p || (from.sub(*tmp).len() < from.sub(*p).len()))){
+            delete p;
+            p=tmp;
+            object=objects[k];
+        }
+    }
+    if (p) {
+        img->setColorPixel(i,j, getColor(object,*p));
+        delete p;
+    }
+}
+
 void Scene::exportPNG() {
     auto* img = new Image(width,height);
     auto* pixDim = getDimPixel();
     for(unsigned int i=0;i<width;i++){
         for (unsigned int j=0; j<height; j++) {
-            img->setColorPixel(i,j,{0.,0.,0.});
-            if (i==170 && j==102) {
-                img->setPath("test.png");
-            }
-            for (unsigned long long k=0; k<nbObjects; k++) {
-                Vector d = getVectorD(pixDim[0], pixDim[1], i, j);
-                Point* p = objects[k]->intersect(camera->getFrom(), d);
-                if(p){
-                    img->setColorPixel(i,j,ambient);
-                    delete p;
-                    break;
-                }
-            }
+            pixelProcessing(img,pixDim,i,j);
         }
     }
     delete[] pixDim;

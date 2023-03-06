@@ -12,10 +12,6 @@ Point* Plane::intersect(const Point &o, const Vector &d) const {
     return new Point(o.add(d.mul(t)));
 }
 
-Object3D* Plane::clone() const {
-    return new Plane(pos,normal);
-}
-
 Vector Plane::getNormal(const Point &p) const {
     return normal;
 }

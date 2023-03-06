@@ -18,10 +18,6 @@ Point* Triangle::intersect(const Point &o, const Vector &d) const {
     return p;
 }
 
-Object3D* Triangle::clone() const {
-    return new Triangle(new Point(*a), new Point(*b), new Point(*c));
-}
-
 Vector Triangle::getNormal(const Point &p) const {
     return (b->sub(*a)).cross(c->sub(*a)).hat();
 }
