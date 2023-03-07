@@ -32,6 +32,7 @@ SceneLoader::SceneLoader(const std::string& filepath) : builder(nullptr) {
                 else if (word=="sphere") sphere();
                 else if (word=="plane") plane();
                 else if (word=="shadow") shadow();
+                else if (word=="maxdepth") maxDepth();
             } else throw SyntaxException("Invalid argument !");
         } catch (SyntaxException& e){e.setLine(idLine); throw;}
     }
@@ -154,6 +155,11 @@ void SceneLoader::plane() {
 
 void SceneLoader::shadow() {
     try {builder->shadow(getWord()=="true");}
+    catch (std::exception& e) {throw SyntaxException("in plane");}
+}
+
+void SceneLoader::maxDepth() {
+    try {builder->maxDepth(getUint());}
     catch (std::exception& e) {throw SyntaxException("in plane");}
 }
 

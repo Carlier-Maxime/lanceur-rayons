@@ -26,6 +26,7 @@ private:
     void sphere();
     void plane();
     void shadow();
+    void maxDepth();
     std::string getWord();
     unsigned int getUint();
     double getDouble();

@@ -98,4 +98,9 @@ SceneBuilder *SceneBuilder::shadow(bool shadow) {
     return this;
 }
 
+SceneBuilder *SceneBuilder::maxDepth(unsigned char maxDepth) {
+    scene->setMaxDepth(maxDepth);
+    return this;
+}
+
 SceneBuilder::~SceneBuilder() = default;

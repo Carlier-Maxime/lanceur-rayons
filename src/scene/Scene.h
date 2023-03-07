@@ -19,8 +19,14 @@ private:
     Light **lights;
     Point **vertices;
     bool shadow;
+    unsigned char maxDepth;
 private:
-    Color getColor(const Object3D *o, const Vector &d, const Point &p) const;
+    Color getColor(const Object3D *o, const Vector &d, const Point &p, unsigned char depth) const;
+    void pixelProcessing(Image *img, double *pixDim, unsigned int i, unsigned int j) const;
+    void rayTrace(Image *img, double* pixDim, unsigned int x, unsigned int y, unsigned int width, unsigned int height) const;
+    Vector getVectorD(double maxX, double maxY, unsigned int x, unsigned int y) const;
+    bool isShadow(const Point& p, const Vector& lDir) const;
+    Color indirectLightning(const Object3D *o, const Vector &d, const Point &p, unsigned char depth) const;
 public:
     Scene(unsigned int width, unsigned int height);
     ~Scene();
@@ -39,11 +45,10 @@ public:
     void addVertex(const Point& v);
     Point* getVertex(unsigned long long i);
     double* getDimPixel();
-    Vector getVectorD(double maxX, double maxY, unsigned int x, unsigned int y);
     void exportPNG();
     void setShadow(bool shadow);
-    void pixelProcessing(Image *img, double *pixDim, unsigned int i, unsigned int j);
-    void rayTrace(Image *img, double* pixDim, unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+
+    void setMaxDepth(unsigned char maxDepth);
 };
 
 #endif //LANCEUR_RAYONS_SCENE_H

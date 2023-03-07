@@ -31,6 +31,7 @@ public:
     SceneBuilder* sphere(const Point& center, double radius);
     SceneBuilder* plane(const Point& pos, const Vector& normal);
     SceneBuilder* shadow(bool shadow);
+    SceneBuilder* maxDepth(unsigned char maxDepth);
     Scene* build();
 };
 

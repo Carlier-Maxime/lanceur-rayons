@@ -8,7 +8,7 @@
 
 Scene::Scene(unsigned int width, unsigned int height) : width(width), height(height), nbLights(0), maxLights(0),
 nbObjects(0), maxObjects(0), nbVertices(0), maxVertices(0), outputPath("output.png"), ambient(0.,0,0),
-camera(nullptr), objects(nullptr), lights(nullptr), vertices(nullptr), shadow(false) {}
+camera(nullptr), objects(nullptr), lights(nullptr), vertices(nullptr), shadow(false), maxDepth(1) {}
 
 Scene::~Scene() {
     for (unsigned long long i=0; i<nbObjects; i++) {
@@ -80,34 +80,58 @@ Color Scene::getAmbient() const {
     return ambient;
 }
 
-Color Scene::getColor(const Object3D *o, const Vector &d, const Point &p) const {
+bool Scene::isShadow(const Point &p, const Vector &lDir) const {
+    if (shadow) {
+        for (unsigned long long k=0; k<nbObjects; k++) {
+            Point* p2 = objects[k]->intersect(p, lDir);
+            if(p2 && p2->sub(p).len()>0.001){
+                delete p2;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+Color Scene::indirectLightning(const Object3D *o, const Vector &d, const Point &p, unsigned char depth) const {
+    if (o->getSpecular()==Color(0.,0,0) || depth>=maxDepth) return {0., 0, 0};
+    Vector n = o->getNormal(p);
+    Vector r = d.add(n.mul(n.dot(d.mul(-1))*2)).hat();
+    Object3D* o2 = nullptr;
+    Point *p2 = nullptr;
+    for (unsigned long long k=0; k<nbObjects; k++) {
+        Point* tmp = objects[k]->intersect(p, r);
+        if(tmp && tmp->sub(p).len()>0.001 && (!p2 || (p.sub(*tmp).len() < p.sub(*p2).len()))){
+            delete p2;
+            p2=tmp;
+            o2=objects[k];
+        } else delete tmp;
+    }
+    if (p2) {
+        Color clr = o->getSpecular().times(getColor(o2,r,*p2,depth+1));
+        delete p2;
+        return clr;
+    }
+    return {0.,0,0};
+}
+
+Color Scene::getColor(const Object3D *o, const Vector &d, const Point &p, unsigned char depth) const {
     Vector n = o->getNormal(p);
     Color sum = Color(0.,0.,0.);
     for (unsigned int i=0; i<nbLights; i++) {
         Vector lDir = lights[i]->getLDir(p);
-        bool blocked = false;
-        if (shadow) {
-            for (unsigned long long k=0; k<nbObjects; k++) {
-                Point* p2 = objects[k]->intersect(p, lDir);
-                if(p2 && p2->sub(p).len()>0.001){
-                    blocked = true;
-                    break;
-                }
-                delete p2;
-            }
-        }
-        if (!blocked) {
+        Color adds = indirectLightning(o,d,p,depth);
+        Color lClr = lights[i]->getColor();
+        if (!isShadow(p,lDir)) {
             double x = n.dot(lDir);
             if (x<0) x=0;
-            else {
-                o->getSpecular();
-            }
+            adds = adds.add(lClr.mul(x).times(o->getDiffuse()));
             double y = n.dot(lDir.add(d.mul(-1)).hat());
             if (y<0) y=0;
             else y=pow(y,o->getShininess());
-            Color lClr = lights[i]->getColor();
-            sum = sum.add(lClr.mul(x).times(o->getDiffuse()).add(lClr.mul(y).times(o->getSpecular())));
+            adds = adds.add(lClr.mul(y).times(o->getSpecular()));
         }
+        sum = sum.add(adds);
     }
     return ambient.add(sum);
 }
@@ -138,7 +162,7 @@ double* Scene::getDimPixel(){
     double pWidth = pHeight*((width*1.0)/height);
     return new double[2] {pWidth, pHeight};
 }
-Vector Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int y) {
+Vector Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int y) const {
     double a = (maxX*(x - (width / 2.) + 0.5)) / (width / 2.);
     double b = (maxY*(y - (height / 2.) + 0.5)) / (height / 2.);
     auto* uvw = camera->getOrthonormal();
@@ -146,11 +170,14 @@ Vector Scene::getVectorD(double maxX, double maxY, unsigned int x, unsigned int 
     return d;
 }
 
-void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned int j) {
+void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned int j) const {
     img->setColorPixel(i,j,{0.,0.,0.});
     Point *p = nullptr;
     Object3D *object = nullptr;
     Vector d = {0,0,0};
+    if (i==330 && j==height-459) {
+        img->setPath("");
+    }
     for (unsigned long long k=0; k<nbObjects; k++) {
         Point from = camera->getFrom();
         d = getVectorD(pixDim[0], pixDim[1], i, j);
@@ -162,12 +189,16 @@ void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned
         } else delete tmp;
     }
     if (p) {
-        img->setColorPixel(i,j, getColor(object, d, *p));
+        Color clr = getColor(object, d, *p, 1);
+        if (clr.getR()>1) clr.setR(1.);
+        if (clr.getG()>1) clr.setG(1.);
+        if (clr.getB()>1) clr.setB(1.);
+        img->setColorPixel(i,j, clr);
         delete p;
     }
 }
 
-void Scene::rayTrace(Image* img, double* pixDim, unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
+void Scene::rayTrace(Image* img, double* pixDim, unsigned int x, unsigned int y, unsigned int width, unsigned int height) const {
     for(unsigned int i=x;i<x+width;i++){
         for (unsigned int j=y; j<y+height; j++) {
             pixelProcessing(img,pixDim,i,j);
@@ -195,4 +226,8 @@ void Scene::exportPNG() {
 
 void Scene::setShadow(bool shadow) {
     Scene::shadow = shadow;
+}
+
+void Scene::setMaxDepth(unsigned char maxDepth) {
+    Scene::maxDepth = maxDepth;
 }
