@@ -8,7 +8,7 @@
 #include "../light/LPoint.h"
 #include "../light/LDirectional.h"
 
-SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(0.,0,0), _specular(0.,0,0), _shininess(0) {
+SceneBuilder::SceneBuilder(unsigned int width, unsigned int height) : _diffuse(0.,0,0), _specular(0.,0,0), _shininess(1) {
     scene = new Scene(width,height);
 }
 

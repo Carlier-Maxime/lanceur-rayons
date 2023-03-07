@@ -20,7 +20,7 @@ private:
     Point **vertices;
     bool shadow;
 private:
-    Color getColor(const Object3D* o, const Point& p) const;
+    Color getColor(const Object3D *o, const Vector &d, const Point &p) const;
 public:
     Scene(unsigned int width, unsigned int height);
     ~Scene();

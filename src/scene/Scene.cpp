@@ -80,7 +80,7 @@ Color Scene::getAmbient() const {
     return ambient;
 }
 
-Color Scene::getColor(const Object3D *o, const Point& p) const {
+Color Scene::getColor(const Object3D *o, const Vector &d, const Point &p) const {
     Vector n = o->getNormal(p);
     Color sum = Color(0.,0.,0.);
     for (unsigned int i=0; i<nbLights; i++) {
@@ -99,10 +99,17 @@ Color Scene::getColor(const Object3D *o, const Point& p) const {
         if (!blocked) {
             double x = n.dot(lDir);
             if (x<0) x=0;
-            sum = Color(sum.add(lights[i]->getColor().mul(x)));
+            else {
+                o->getSpecular();
+            }
+            double y = n.dot(lDir.add(d.mul(-1)).hat());
+            if (y<0) y=0;
+            else y=pow(y,o->getShininess());
+            Color lClr = lights[i]->getColor();
+            sum = sum.add(lClr.mul(x).times(o->getDiffuse()).add(lClr.mul(y).times(o->getSpecular())));
         }
     }
-    return Color(ambient.add(sum.times(o->getDiffuse())));
+    return ambient.add(sum);
 }
 
 void Scene::upMaxVertices(unsigned long long int max) {
@@ -143,9 +150,10 @@ void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned
     img->setColorPixel(i,j,{0.,0.,0.});
     Point *p = nullptr;
     Object3D *object = nullptr;
+    Vector d = {0,0,0};
     for (unsigned long long k=0; k<nbObjects; k++) {
         Point from = camera->getFrom();
-        Vector d = getVectorD(pixDim[0], pixDim[1], i, j);
+        d = getVectorD(pixDim[0], pixDim[1], i, j);
         Point* tmp = objects[k]->intersect(from, d);
         if(tmp && (!p || (from.sub(*tmp).len() < from.sub(*p).len()))){
             delete p;
@@ -154,7 +162,7 @@ void Scene::pixelProcessing(Image* img, double* pixDim, unsigned int i, unsigned
         } else delete tmp;
     }
     if (p) {
-        img->setColorPixel(i,j, getColor(object,*p));
+        img->setColorPixel(i,j, getColor(object, d, *p));
         delete p;
     }
 }

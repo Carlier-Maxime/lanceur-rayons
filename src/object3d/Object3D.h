@@ -19,6 +19,10 @@ public:
     void setShininess(unsigned int i);
     virtual Vector getNormal(const Point &p) const = 0;
     Color getDiffuse() const;
+
+    const Color &getSpecular() const;
+
+    unsigned int getShininess() const;
 };
 
 #endif //LANCEUR_RAYONS_OBJECT3D_H
