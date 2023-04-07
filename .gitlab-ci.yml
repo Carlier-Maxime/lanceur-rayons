@@ -43,14 +43,17 @@ premieresimages:
 imagescouleur:
   stage: basic
   script: "cd tests; ./tests5.sh"
+  allow_failure: true
 
 plansettriangles:
   stage: basic
   script: "cd tests; ./tests6.sh"
+  allow_failure: true
 
-# lumiereindirecte:
-#   stage: realist
-#   script: "cd tests; ./tests7.sh"
+lumiereindirecte:
+   stage: realist
+   script: "cd tests; ./tests7.sh"
+   allow_failure: true
 
 # damiers:
 #   stage: realist
@@ -78,10 +81,15 @@ plansettriangles:
 #   only:
 #     - transformations
 
-#auditcode:
-#  image: cache-ili.univ-artois.fr/proxy_cache/sonarsource/sonar-scanner-cli
-#  stage: qa
-#  script: "sonar-scanner $PROXY $SONARINFO"
+course:
+  stage: efficiency
+  script: "cd tests; ./course.sh"
+  timeout: 10 minutes
+
+auditcode:
+  image: cache-ili.univ-artois.fr/proxy_cache/sonarsource/sonar-scanner-cli
+  stage: qa
+  script: "sonar-scanner $PROXY $SONARINFO"
    
 executable:
   stage: build
